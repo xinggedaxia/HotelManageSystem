@@ -1,0 +1,130 @@
+/*.container-fluid{
+  width: 1170px !important;
+}*/
+.part {
+  width: 100%;
+}
+.part .nav-sidebar {
+  height: 0;
+  overflow: hidden;
+  transition: all .3s;
+}
+.part .title {
+  display: block;
+  position: relative;
+  padding-left: 8px;
+  font-size: 16px;
+  color: white;
+  line-height: 40px;
+  margin-right: -21px;
+  margin-left: -20px;
+  background-color: #606060;
+  border-top: 1px solid gray;
+  cursor: pointer;
+}
+.part .title i {
+  position: absolute;
+  right: 10px;
+}
+.part .currentTitle {
+  background-color: #a9a5a5 !important;
+}
+.room {
+  height: 500px;
+  border: 3px solid gray;
+  border-radius: 10px;
+}
+.room .state {
+  height: 40px;
+}
+.room .state ul {
+  list-style: none;
+}
+.room .state ul li {
+  float: left;
+  margin-right: 15px;
+}
+.room .state ul li span {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+}
+.room .state ul li p {
+  display: inline-block;
+  padding-left: 5px;
+}
+.room .state ul li:nth-child(1) span {
+  background-color: blue;
+}
+.room .state ul li:nth-child(2) span {
+  background-color: yellow;
+}
+.room .state ul li:nth-child(3) span {
+  background-color: green;
+}
+.room .state ul li:nth-child(4) span {
+  background-color: gray;
+}
+.allroom {
+  overflow: hidden;
+}
+.allroom .rooms {
+  height: 60px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.allroom .rooms .roomType {
+  float: left;
+  width: 60px;
+  height: 60px;
+  background-color: purple;
+  border-radius: 8px;
+  font-size: 22px;
+  text-align: center;
+  color: white;
+}
+.allroom .rooms ul {
+  list-style: none;
+  display: inline-block;
+  overflow: hidden;
+  margin-bottom: 0px;
+}
+.allroom .rooms ul li {
+  float: left;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  background-color: gray;
+  margin-right: 15px;
+  text-align: center;
+  border-radius: 8px;
+}
+.info {
+  height: 500px;
+}
+.info .systemInfo {
+  height: 300px;
+  border: 3px solid gray;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  background-color: #e0e0e0;
+}
+.info .systemInfo h1 {
+  text-align: center;
+  font-size: 24px;
+  line-height: 30px;
+}
+.info .systemInfo .infocontent p {
+  line-height: 40px;
+  padding-left: 30px;
+  text-align: left;
+}
+.info .currentTime {
+  height: 170px;
+  border: 3px solid gray;
+  padding: 20px;
+  border-radius: 8px;
+  line-height: 60px;
+  font-size: 30px;
+  text-align: center;
+}

@@ -1,0 +1,138 @@
+/*.container-fluid{
+  width: 1170px !important;
+}*/
+//左侧导航条
+.part{
+  width: 100%;
+  .nav-sidebar{
+    height: 0;
+    overflow: hidden;
+    transition: all .3s;
+  }
+  .title{
+    display: block;
+    position: relative;
+    padding-left: 8px;
+    font-size: 16px;
+    color : white;
+    line-height: 40px;
+    margin-right: -21px;
+    margin-left: -20px;
+    background-color: #606060;
+    border-top: 1px solid gray;
+    cursor: pointer;
+
+    i{
+      position: absolute;
+      right: 10px;
+    }
+  }
+  .currentTitle{
+    background-color: #a9a5a5 !important;
+  }
+}
+//首页主体内容区域
+.room{
+  height: 500px;
+  border: 3px solid gray;
+  border-radius: 10px;
+  .state{
+    height: 40px;
+    ul{
+      list-style: none;
+      li{
+        float: left;
+        margin-right: 15px;
+        span{
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+        }
+        p{
+          display: inline-block;
+          padding-left: 5px;
+        }
+        &:nth-child(1) span{
+          background-color: blue;
+        }
+        &:nth-child(2) span{
+          background-color: yellow;
+        }
+        &:nth-child(3) span{
+          background-color: green;
+        }
+        &:nth-child(4) span{
+          background-color: gray;
+        }
+      }
+    }
+  }
+}
+.allroom{
+  overflow: hidden;
+  .rooms{
+    height: 60px;
+    overflow: hidden;
+    margin-bottom: 14px;
+    .roomType{
+      float: left;
+      width: 60px;
+      height: 60px;
+      background-color: purple;
+      border-radius: 8px;
+      font-size: 22px;
+      text-align: center;
+      color:white;
+    }
+    ul{
+      list-style: none;
+      display: inline-block;
+      overflow: hidden;
+      margin-bottom: 0px;
+      li{
+        float: left;
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+        background-color: gray;
+        margin-right: 15px;
+        text-align: center;
+        border-radius: 8px;
+
+      }
+    }
+  }
+}
+.info{
+  height: 500px;
+
+  .systemInfo{
+    height: 300px;
+    border: 3px solid gray;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    background-color: #e0e0e0;
+    h1{
+      text-align: center;
+      font-size: 24px;
+      line-height: 30px;
+    }
+    .infocontent{
+      p{
+        line-height: 40px;
+        padding-left: 30px;
+        text-align: left;
+
+      }
+    }
+  }
+  .currentTime{
+    height: 170px;
+    border: 3px solid gray;
+    padding: 20px;
+    border-radius: 8px;
+    line-height: 60px;
+    font-size: 30px;
+    text-align: center;
+  }
+}

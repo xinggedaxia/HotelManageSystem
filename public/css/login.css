@@ -1,0 +1,39 @@
+
+.box {
+  height: 650px;
+  background-color: #5390C7;
+}
+.box .outerbox {
+  margin: 100px auto 0px auto;
+  width: 500px;
+  height: 400px;
+}
+.box .outerbox h1,
+.box .outerbox p {
+  width: 100%;
+  text-align: center;
+  color: white;
+}
+.box .outerbox p {
+  font-size: 18px;
+}
+.box .outerbox .innerBox {
+  margin: 0 auto;
+  width: 300px;
+  height: 250px;
+  background-color: #fff;
+  padding: 0 50px;
+  border: 5px solid #5942df;
+  border-radius: 5px;
+}
+.box .outerbox .innerBox h2 {
+  color: #218FDE;
+  font-size: 20px;
+  line-height: 30px;
+}
+.box .outerbox .innerBox #login {
+  display: block;
+  width: 100%;
+  background-color: #00AA68;
+  color: white;
+}
