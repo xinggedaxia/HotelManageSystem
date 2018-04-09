@@ -1,0 +1,67 @@
+<div class="checkin">
+    <table width="1000" height="448" border="1">
+        <tr>
+            <td height="40" colspan="10" align="center" class="h2">入住登记表</td>
+        </tr>
+        <tr align="left">
+            <td width="150" height="40" align="left" class="attrName"> <label for="sfz">身份证号:</label></td>
+            <td height="40" colspan="2" align="left"><input type="text" placeholder="请输入用户身份证号" id="sfz"></td>
+            <td width="150" height="40" align="left" class="attrName"><label for="name">姓名：</label></td>
+            <td width="150" height="40" align="left"><input type="text" id="name"></td>
+            <td width="150" height="40" align="left" class="attrName">性别：</td>
+            <td width="80" height="40" align="left"><label for="man">男</label></td>
+            <td width="80" height="40" align="left"><input type="radio" value="man" name="sex" id="man" checked></td>
+            <td width="80" height="40" align="left"><label for="woman">女</label></td>
+            <td width="80" height="40" align="left"><input type="radio" value="woman" id="woman" name="sex"></td>
+        </tr>
+        <tr>
+            <td height="40" align="left"><label for="roomNum" class="attrName">房间号：</label></td>
+            <td width="150" height="40" align="left">
+                <select name="roomNum" id="roomNum">
+                    <option value="">1</option>
+                    <option value="">2</option>
+                    <option value="">3</option>
+                    <option value="">4</option>
+                    <option value="">5</option>
+                    <option value="">6</option>
+                    <option value="">7</option>
+                    <option value="">8</option>
+                    <option value="">9</option>
+                </select>
+            </td>
+            <td width="150" height="40" align="left" class="attrName">房间价格:</td>
+            <td height="40" align="left"><input type="text" disabled value="2000元/天"></td>
+            <td height="40" align="left" class="attrName">房间类型:</td>
+            <td height="40" align="left">
+                <select name="roomType" id="roomType">
+                    <option value="A1">普通单间</option>
+                    <option value="A2">普通双间</option>
+                    <option value="B1">豪华单间</option>
+                    <option value="B2">豪华双间</option>
+                    <option value="C1">贵宾套房</option>
+                    <option value="C2">总统套房</option>
+
+                </select>
+            </td>
+            <td height="40" colspan="2" align="left" class="attrName">入住人数:</td>
+            <td height="40" colspan="2" align="left"><input type="number" value="1"></td>
+        </tr>
+        <tr>
+            <td height="40" align="left" class="attrName">入住日期:</td>
+            <td height="40" colspan="2" align="left"><input type="date" name="inTime"></td>
+            <td height="40" align="left" class="attrName">退房日期:</td>
+            <td height="40" colspan="2" align="left"><input type="date" name="outTime"></td>
+            <td height="40" colspan="2" align="left" class="attrName">入住天数:</td>
+            <td height="40" colspan="2" align="left"><input type="text" value="1" disabled></td>
+        </tr>
+        <tr>
+            <td height="40" align="left" class="attrName">价格合计:</td>
+            <td height="40" colspan="2" align="left"><input type="text" name="totalMonney" value="10000元"  disabled></td>
+            <td height="40" align="left" class="attrName">需缴押金:</td>
+            <td height="40" colspan="2" align="left"><input type="text" name="yajing" value="2000元" disabled></td>
+            <td height="40" colspan="2" align="left" class="attrName">填表人：</td>
+            <td height="40" colspan="2" align="left"><input type="text" value="周星星" disabled></td>
+        </tr>
+    </table>
+    <input type="button" value="入住登记" id="submit" class="btn btn-success">
+</div>

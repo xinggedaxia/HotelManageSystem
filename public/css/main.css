@@ -69,9 +69,8 @@
   overflow: hidden;
 }
 .allroom .rooms {
-  height: 60px;
   overflow: hidden;
-  margin-bottom: 14px;
+  margin-bottom: 5px;
 }
 .allroom .rooms .roomType {
   float: left;
@@ -84,9 +83,9 @@
   color: white;
 }
 .allroom .rooms ul {
+  height: 70px;
   list-style: none;
-  display: inline-block;
-  overflow: hidden;
+  overflow-y: auto;
   margin-bottom: 0px;
 }
 .allroom .rooms ul li {
@@ -94,10 +93,12 @@
   width: 60px;
   height: 60px;
   line-height: 60px;
-  background-color: gray;
+  background-color: #419641;
   margin-right: 15px;
   text-align: center;
   border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
 }
 .info {
   height: 500px;
@@ -125,6 +126,37 @@
   padding: 20px;
   border-radius: 8px;
   line-height: 60px;
-  font-size: 30px;
+  font-size: 32px;
   text-align: center;
+}
+.checkin {
+  height: 500px;
+  padding-top: 8px;
+  border: 3px solid gray;
+  border-radius: 10px;
+}
+.checkin table {
+  margin: 0 auto;
+}
+.checkin table .attrName {
+  font-weight: bold;
+}
+.checkin table td {
+  padding-left: 5px;
+}
+.checkin table td label {
+  line-height: 50px;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+.checkin table td input,
+.checkin table td select {
+  display: block;
+  width: 100%;
+  margin-left: -2px;
+}
+.checkin input#submit {
+  display: block;
+  margin: 2px auto;
 }

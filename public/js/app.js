@@ -25,7 +25,7 @@ App.config(['$stateProvider', '$locationProvider', "$urlRouterProvider", functio
         url : "/dengjiruzhu",
             views: {
                 "mainContent": {
-                    template:  "<div style='padding:300px'>我是入住登记的页面</div>"
+                    templateUrl:  "/views/ruzhuguanli/checkIn.html"
                 }
             }
     })
@@ -33,7 +33,7 @@ App.config(['$stateProvider', '$locationProvider', "$urlRouterProvider", functio
         url : "/fangjianyuding",
             views: {
                 "mainContent": {
-                    template:  "<div style='padding:200px'>我是房间预定的页面</div>"
+                    templateUrl:  "/views/ruzhuguanli/order.html"
                 }
             }
     })
@@ -41,7 +41,7 @@ App.config(['$stateProvider', '$locationProvider', "$urlRouterProvider", functio
         url : "/huanfang",
             views: {
                 "mainContent": {
-                    template:  "<div style='padding:200px'>我是换房的页面</div>"
+                    templateUrl:  "/views/ruzhuguanli/changeRoom.html"
                 }
             }
     })
@@ -49,15 +49,15 @@ App.config(['$stateProvider', '$locationProvider', "$urlRouterProvider", functio
         url : "/tuifang",
             views: {
                 "mainContent": {
-                    template:  "<div style='padding:200px'>我是退房的页面</div>"
+                    templateUrl:  "/views/ruzhuguanli/tuiFang.html"
                 }
             }
     })
-        .state("index.zaixianyuding",{
-        url : "/zaixianyuding",
+        .state("index.fangjianguanli",{
+        url : "/fangjianguanli",
             views: {
                 "mainContent": {
-                    template:  "<div style='padding:200px'>我是zaixianyuding的页面</div>"
+                    templateUrl:  "/views/fangjianguanli/fangjianguanli.html"
                 }
             }
     })
