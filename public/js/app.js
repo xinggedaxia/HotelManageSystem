@@ -65,7 +65,7 @@ App.config(['$stateProvider', '$locationProvider', "$urlRouterProvider", functio
         url : "/yuangongxinxi",
             views: {
                 "mainContent": {
-                    template:  "<div style='padding:200px'>我是yuangongxinxi的页面</div>"
+                    templateUrl:  "/views/yuanGongGuanLi/yuanGongXinXi.html"
                 }
             }
     })
@@ -73,7 +73,7 @@ App.config(['$stateProvider', '$locationProvider', "$urlRouterProvider", functio
         url : "/yuangongkaoqing",
             views: {
                 "mainContent": {
-                    template:  "<div style='padding:200px'>我是yuangongkaoqing的页面</div>"
+                    templateUrl:  "/views/yuanGongGuanLi/yuanGongKaoQing.html",
                 }
             }
     })
@@ -81,7 +81,7 @@ App.config(['$stateProvider', '$locationProvider', "$urlRouterProvider", functio
         url : "/gongzijiesuan",
             views: {
                 "mainContent": {
-                    template:  "<div style='padding:200px'>我是gongzijiesuan的页面</div>"
+                    templateUrl:  "/views/yuanGongGuanLi/yuanGongGongZi.html"
                 }
             }
     })
@@ -89,7 +89,8 @@ App.config(['$stateProvider', '$locationProvider', "$urlRouterProvider", functio
         url : "/jingrishouru",
             views: {
                 "mainContent": {
-                    template:  "<div style='padding:200px'>我是jingrishouru的页面</div>"
+                    templateUrl:  "/views/jingYingFenXi/today.html",
+                    controller: 'today',
                 }
             }
     })
@@ -97,7 +98,8 @@ App.config(['$stateProvider', '$locationProvider', "$urlRouterProvider", functio
         url : "/benyueshouru",
             views: {
                 "mainContent": {
-                    template:  "<div style='padding:200px'>我是benyueshouru的页面</div>"
+                    templateUrl:  "/views/jingYingFenXi/month.html",
+                    controller: 'month',
                 }
             }
     })
@@ -105,7 +107,8 @@ App.config(['$stateProvider', '$locationProvider', "$urlRouterProvider", functio
         url : "/bennianshouru",
             views: {
                 "mainContent": {
-                    template:  "<div style='padding:200px'>我是bennianshouru的页面</div>"
+                    templateUrl:  "/views/jingYingFenXi/year.html",
+                    controller: 'year',
                 }
             }
     })
