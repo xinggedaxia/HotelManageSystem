@@ -1,6 +1,19 @@
 /*.container-fluid{
   width: 1170px !important;
 }*/
+/*
+顶部导航条
+*/
+#readCard {
+  height: 30px;
+  text-align: center;
+}
+#readCard option {
+  text-align: center;
+}
+/*
+左侧导航条
+*/
 .part {
   width: 100%;
 }
@@ -54,10 +67,10 @@
   padding-left: 5px;
 }
 .room .state ul li:nth-child(1) span {
-  background-color: blue;
+  background-color: #426ab3;
 }
 .room .state ul li:nth-child(2) span {
-  background-color: yellow;
+  background-color: #ffd400;
 }
 .room .state ul li:nth-child(3) span {
   background-color: green;
@@ -93,12 +106,23 @@
   width: 60px;
   height: 60px;
   line-height: 60px;
-  background-color: #419641;
   margin-right: 15px;
   text-align: center;
   border-radius: 8px;
   margin-bottom: 10px;
   cursor: pointer;
+}
+.allroom .rooms ul .free {
+  background-color: #419641;
+}
+.allroom .rooms ul .ordered {
+  background-color: #426ab3;
+}
+.allroom .rooms ul .occupied {
+  background-color: #ffd400;
+}
+.allroom .rooms ul .repair {
+  background-color: gray;
 }
 .info {
   height: 500px;
@@ -161,6 +185,17 @@
   margin: 2px auto;
 }
 .mask {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.5;
+}
+.mask2 {
   display: none;
   position: fixed;
   left: 0;
@@ -248,4 +283,47 @@
 .changePass .close:hover {
   opacity: 1;
   transform: rotateZ(180deg);
+}
+/*
+读身份证显示界面
+*/
+.cardInfo {
+  display: none;
+  position: fixed;
+  width: 752px;
+  height: 302px;
+  left: 50%;
+  top: 50%;
+  margin-left: -377px;
+  margin-top: -151px;
+  background-color: #f8f8f8;
+  z-index: 99999999;
+}
+.cardInfo img {
+  width: 150px;
+  height: 200px;
+}
+.cardInfo .attr {
+  color: #5942df;
+  border-color: black;
+}
+.cardInfo .close2 {
+  position: absolute;
+  cursor: pointer;
+  top: 12px;
+  right: 10px;
+  color: red;
+  opacity: 0.8;
+  transition: all .5s;
+  line-height: 1;
+}
+.cardInfo .close2:hover {
+  opacity: 1;
+  transform: rotateZ(180deg);
+}
+.cardInfo .write {
+  display: inline-block;
+  margin: 0 auto;
+  width: 60px;
+  height: 30px;
 }

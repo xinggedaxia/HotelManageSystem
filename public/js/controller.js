@@ -1,7 +1,9 @@
 var myApp = angular.module("Controller", []);
 
 // myApp.controller("");
-// 主控制器
+/*
+主控制器
+*/
 myApp.controller("main", ["$scope", "$filter", "$interval", function ($scope, $filter, $interval) {
 
     //时间显示
@@ -29,10 +31,15 @@ myApp.controller("leftBar", ["$scope", function ($scope) {
         $(this).addClass("currentTitle");
     });
 
+
+
+
 }]);
 
-// 导航条控制器
-myApp.controller("topBar", ["$scope", function ($scope) {
+/*
+导航条控制器
+*/
+myApp.controller("topBar", ["$scope","$timeout", function ($scope,$timeout) {
 
 //暂离
     $("#userleave").click(function () {
@@ -58,17 +65,17 @@ myApp.controller("topBar", ["$scope", function ($scope) {
 
     //注销
     $("#cancellation").click(function () {
-       $.get("/ancellation",function (res) {
-           window.location.href = "/login";
-       });
+        $.get("/ancellation", function (res) {
+            window.location.href = "/login";
+        });
     });
 
     // 修改密码
     $("#changePass").click(function () {
         $("#oldpass").val("");
-        $(".changePass").css("display","block");
-        $(".tishi").css("display","none");
-        $(".mask").css("display","block");
+        $(".changePass").css("display", "block");
+        $(".tishi").css("display", "none");
+        $(".mask").css("display", "block");
 
         $("#change").click(function () {
             var password = $("#oldpass").val();
@@ -77,12 +84,12 @@ myApp.controller("topBar", ["$scope", function ($scope) {
                 if (data.result == false) {
                     $(".tishi").css("display", "block");
                 } else {
-                    $.post("/updatePass",{"newPass" : newPass},function (result) {
-                        if(result.result == true){
+                    $.post("/updatePass", {"newPass": newPass}, function (result) {
+                        if (result.result == true) {
                             $(".mask").css("display", "none");
                             $(".changePass").css("display", "none");
                             alert("修改成功！");
-                        }else{
+                        } else {
                             alert("更改失败！");
                         }
                     });
@@ -96,13 +103,55 @@ myApp.controller("topBar", ["$scope", function ($scope) {
             $(".changePass").css("display", "none");
         });
     });
+    // ------------------
+    //初始化当前用户信息
+    $scope.currentUser = {
+        "name" : "",
+        "number" : "",
+        "sex" : "男"
+    };
+    $scope.sfz = "";
+    // 读取身份证信息
+    $.get("/getInfo",function (result) {
+        $scope.sfz = result;
+        console.log(1 + "" + $scope.sfz);
+    });
+    $("#readCard").change(function () {
+        $(".mask2").css("display", "block");
+        $(".cardInfo").css("display","block");
+        var index = parseInt($(this).val());
+        $scope.currentUser = $scope.sfz[index];
+        console.log($scope.currentUser);
+    });
+    // 关闭修改密码界面
+    $(".close2").click(function () {
+        $(".mask2").css("display", "none");
+        $("#readCard").val("0");
+        $(".cardInfo").css("display","none");
+    });
+
 
 }]);
 
-// 图表绘制
+
+/*
+房间信息控制类
+*/
+
+myApp.controller("mainContent", ["$scope", function ($scope) {
+
+    // 请求房间数据
+    $.get("roomInfo",function (result) {
+        // console.log(result);
+        $scope.roomInfo = result;
+    });
+}]);
+
+/*
+图表绘制
+*/
 myApp.controller("today", ["$scope", function ($scope) {
     var myChart = echarts.init(document.getElementById('main'));
-    console.log(1);
     // 指定图表的配置项和数据
     var option = {
         title: {

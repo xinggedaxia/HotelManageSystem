@@ -10,14 +10,16 @@ App.config(['$stateProvider', '$locationProvider', "$urlRouterProvider", functio
                     templateUrl : "./views/main.html"
                 },
                 "topbar@index" : {//这儿的index指的是url
-                    templateUrl : "./views/topbar.html"
-                },
-                "leftbar@index" : {
-                    templateUrl : "./views/left.html",
+                    templateUrl : "./views/topbar.html",
                     controller : "topBar"
                 },
+                "leftbar@index" : {
+                    templateUrl : "./views/left.html"
+
+                },
                 "mainContent@index" : {
-                    templateUrl : "./views/mainContent.html"
+                    templateUrl : "./views/mainContent.html",
+                    controller : "mainContent"
                 }
             }
 

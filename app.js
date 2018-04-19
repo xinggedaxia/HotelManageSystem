@@ -28,9 +28,11 @@ app.get("/login",function (req,res) {
 });
 app.get("/adminLeave",router.adminLeave);
 app.get("/ancellation",router.ancellation);
-app.post("/updatePass",router.updatePass)
+app.post("/updatePass",router.updatePass);
+app.get("/roomInfo",router.roomInfo);
+app.get("/getInfo",router.getInfo);
 app.use(function (req, res) {
-    if(req.session.login == false || req.session.login == ""){
+    if(req.session.login == false || req.session.login == undefined){
         console.log("非法闯入");
         res.redirect("/login");
     }

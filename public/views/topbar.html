@@ -17,8 +17,51 @@
                 <li id="changePass"><a href="#">修改密码</a></li>
             </ul>
             <form class="navbar-form navbar-right">
-                <input type="text" class="form-control" placeholder="输入你想查找的功能">
+                <select name="name" id="readCard">
+                    <option value="0">--请刷二代身份证--</option>
+                    <option  ng-repeat="(index,x ) in sfz" value="{{index}}">{{x.name}}</option>
+                </select>
             </form>
         </div>
+    </div>
+    <!--
+读身份显示界面
+-->
+    <div class="mask2"></div>
+    <div class="cardInfo">
+        <span class="close2 glyphicon glyphicon-remove" ></span>
+        <table border="1">
+            <tr>
+                <td height="50" colspan="5" align="center" valign="middle" style="font-weight: bold;" class="">用户身份证信息</td>
+            </tr>
+            <tr>
+                <td width="150" rowspan="4" align="center" valign="middle"><img src="{{currentUser.imgurl}}" alt=""></td>
+                <td width="150" align="center" valign="middle" class="attr">姓名：</td>
+                <td width="150" align="center" valign="middle">{{currentUser.name}}</td>
+                <td width="150" align="center" valign="middle" class="attr">性别：</td>
+                <td width="150" height="50" align="center" valign="middle">{{currentUser.sex}}</td>
+            </tr>
+            <tr>
+                <td align="center" valign="middle" class="attr">民族：</td>
+                <td align="center" valign="middle">{{currentUser.mingzu}}</td>
+                <td align="center" valign="middle" class="attr">出生日期：</td>
+                <td height="50" align="center" valign="middle">{{currentUser.birthday | date:"yyyy-MM-dd"}}</td>
+            </tr>
+            <tr>
+                <td align="center" valign="middle" class="attr">证件号码：</td>
+                <td align="center" valign="middle">{{currentUser.number }}</td>
+                <td align="center" valign="middle" class="attr">籍贯：</td>
+                <td height="50" align="center" valign="middle">{{currentUser.address}}</td>
+            </tr>
+            <tr>
+                <td align="center" valign="middle" class="attr">开始有效期：</td>
+                <td align="center" valign="middle">{{currentUser.start | date:"yyyy-MM-dd"}}</td>
+                <td align="center" valign="middle" class="attr">结束有效期：</td>
+                <td height="50" align="center" valign="middle">{{currentUser.end | date:"yyyy-MM-dd"}}</td>
+            </tr>
+            <tr>
+                <td height="50" colspan="5" align="center" valign="middle"><button class="read write btn-success">读取</button></td>
+            </tr>
+        </table>
     </div>
 </nav>

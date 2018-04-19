@@ -69,3 +69,13 @@ module.exports.updatePass = function (req, res) {
 
     });
 }
+module.exports.roomInfo = function (req,res) {
+    db.find("select * from roominfo",function (result) {
+        res.json(result);
+    });
+}
+module.exports.getInfo = function (req,res) {
+    db.find("select * from sfz",function (result) {
+        res.json(result);
+    });
+}
