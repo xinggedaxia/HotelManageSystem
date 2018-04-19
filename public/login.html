@@ -18,10 +18,6 @@
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <script src="/libs/angular/angular.js"></script>
-    <script src="/libs/angular/angular-ui-router.js"></script>
-    <script src="/js/app.js"></script>
-    <script src="/js/controller.js"></script>
     <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
     <script src="/libs/jquery/jquery-3.3.1.min.js"></script>
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
@@ -36,20 +32,19 @@
         <p>Una Century Hotel management system</p>
         <div class="innerBox">
             <h2 class="text-center">管理员登陆</h2>
-            <form>
                 <div class="form-group">
-                    <input type="text" class="form-control"  placeholder="请输入用户名">
+                    <input type="text" class="form-control" autofocus  placeholder="请输入用户名" id="username">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control"  placeholder="请输入密码">
+                    <input type="password" class="form-control"  placeholder="请输入密码" id="password">
                 </div>
 
-                <a type="submit" class="btn btn-default" id="login" href="index.html">登陆</a>
-            </form>
+                <button type="submit" class="btn btn-default" id="login">登陆</button>
+            <span class="tishi">用户名或密码错误！</span>
         </div>
     </div>
 </div>
-
+<script src="/js/login.js"></script>
 </body>
 </html>
 

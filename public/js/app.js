@@ -13,7 +13,8 @@ App.config(['$stateProvider', '$locationProvider', "$urlRouterProvider", functio
                     templateUrl : "./views/topbar.html"
                 },
                 "leftbar@index" : {
-                    templateUrl : "./views/left.html"
+                    templateUrl : "./views/left.html",
+                    controller : "topBar"
                 },
                 "mainContent@index" : {
                     templateUrl : "./views/mainContent.html"

@@ -17,21 +17,27 @@ app.use(session({
         maxAge: 1000000 * 1000  // 有效期，单位是毫秒
     }
 }));
-
+//路由
+var router = require("./routers/router.js");
 //创建静态文件夹
 app.use(express.static("public"));
 //设置当 站内路径(req.path) 不包括 /api 时，都转发到 AngularJS的ng-app(index.html)。所以，我们再直接访问地址 (http://onbook.me/book)时，/book 不包括 /api，就会被直接转发到AngularJS进行路由管理。我们就实现了路由的优化！
-
+app.post("/checkManager",router.checkmanager);
+app.get("/login",function (req,res) {
+    res.sendfile('public/login.html');
+});
+app.get("/adminLeave",router.adminLeave);
+app.get("/ancellation",router.ancellation);
+app.post("/updatePass",router.updatePass)
 app.use(function (req, res) {
-    if(req.path.indexOf('/api')>=0){
-        res.send("server text");
-
-    } else if(req.path.indexOf('/login')>=0){
-        res.sendfile('public/login.html')
-
-    }else{ //angular启动页
+    if(req.session.login == false || req.session.login == ""){
+        console.log("非法闯入");
+        res.redirect("/login");
+    }
+    else{ //angular启动页
         res.sendfile('public/index.html');
     }
 });
+
 http.listen(80,"127.0.0.1");
 console.log("服务器启动！");

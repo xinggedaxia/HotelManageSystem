@@ -1,4 +1,3 @@
-
 .box {
   height: 650px;
   background-color: #5390C7;
@@ -36,4 +35,12 @@
   width: 100%;
   background-color: #00AA68;
   color: white;
+}
+.box .outerbox .innerBox .tishi {
+  display: none;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  color: red;
+  text-align: center;
 }
