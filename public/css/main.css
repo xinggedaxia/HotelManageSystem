@@ -4,6 +4,12 @@
 /*
 顶部导航条
 */
+.navbar {
+  background-color: #00aa68;
+}
+.navbar a {
+  color: white !important;
+}
 #readCard {
   height: 30px;
   text-align: center;
@@ -31,8 +37,8 @@
   line-height: 40px;
   margin-right: -21px;
   margin-left: -20px;
-  background-color: #606060;
-  border-top: 1px solid gray;
+  background-color: #00aa68;
+  border-top: 1px solid white;
   cursor: pointer;
 }
 .part .title i {
@@ -40,7 +46,7 @@
   right: 10px;
 }
 .part .currentTitle {
-  background-color: #a9a5a5 !important;
+  background-color: #44beff !important;
 }
 .room {
   height: 500px;
@@ -132,7 +138,7 @@
   border: 3px solid gray;
   border-radius: 8px;
   margin-bottom: 30px;
-  background-color: #e0e0e0;
+  background-color: #c8f2d5;
 }
 .info .systemInfo h1 {
   text-align: center;
@@ -152,6 +158,7 @@
   line-height: 60px;
   font-size: 32px;
   text-align: center;
+  background-color: #f3f3f3;
 }
 .checkin {
   height: 500px;
@@ -298,6 +305,9 @@
   margin-top: -151px;
   background-color: #f8f8f8;
   z-index: 99999999;
+  border: 5px solid #5942df;
+  border-radius: 15px;
+  overflow: hidden;
 }
 .cardInfo img {
   width: 150px;

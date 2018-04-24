@@ -1,67 +1,63 @@
 <div class="checkin">
+
     <table width="1000" height="448" border="1">
         <tr>
             <td height="40" colspan="10" align="center" class="h2">换房登记表</td>
         </tr>
         <tr align="left">
             <td width="150" height="40" align="left" class="attrName"> <label for="sfz">身份证号:</label></td>
-            <td height="40" colspan="2" align="left"><input type="text" placeholder="请输入用户身份证号" id="sfz"></td>
+            <td height="40" colspan="2" align="left"><input type="text" name="number" placeholder="请刷卡或输入" id="sfz" value="{{currentUser.number}}"></td>
             <td width="150" height="40" align="left" class="attrName"><label for="name">姓名：</label></td>
-            <td width="150" height="40" align="left"><input type="text" id="name"></td>
+            <td width="150" height="40" align="left"><input type="text" id="name" value="{{currentUser.name}}"></td>
             <td width="150" height="40" align="left" class="attrName">性别：</td>
             <td width="80" height="40" align="left"><label for="man">男</label></td>
-            <td width="80" height="40" align="left"><input type="radio" value="man" name="sex" id="man" checked></td>
-            <td width="80" height="40" align="left"><label for="woman">女</label></td>
-            <td width="80" height="40" align="left"><input type="radio" value="woman" id="woman" name="sex"></td>
+            <td width="80" height="40" align="left"><input type="radio" value="man" name="sex" id="man" checked ng-checked="currentUser.sex == '男'"></td>
+            <td width="80" height="40" align="left"><label for="woman" >女</label></td>
+            <td width="80" height="40" align="left"><input type="radio" value="woman" id="woman" name="sex" ng-checked="currentUser.sex == '女'"></td>
         </tr>
         <tr>
-            <td height="40" align="left"><label for="roomNum" class="attrName">房间号：</label></td>
+            <td height="40" align="left"><label for="oldRoomNum" class="attrName">原房间号：</label></td>
             <td width="150" height="40" align="left">
-                <select name="roomNum" id="roomNum">
-                    <option value="">1</option>
-                    <option value="">2</option>
-                    <option value="">3</option>
-                    <option value="">4</option>
-                    <option value="">5</option>
-                    <option value="">6</option>
-                    <option value="">7</option>
-                    <option value="">8</option>
-                    <option value="">9</option>
-                </select>
+                <input type="text" value="{{oldRoomNum}}" id="oldRoomNum" disabled >
             </td>
-            <td width="150" height="40" align="left" class="attrName">房间价格:</td>
-            <td height="40" align="left"><input type="text" disabled value="2000元/天"></td>
-            <td height="40" align="left" class="attrName">房间类型:</td>
-            <td height="40" align="left">
-                <select name="roomType" id="roomType">
-                    <option value="A1">普通单间</option>
-                    <option value="A2">普通双间</option>
-                    <option value="B1">豪华单间</option>
-                    <option value="B2">豪华双间</option>
-                    <option value="C1">贵宾套房</option>
-                    <option value="C2">总统套房</option>
+            <td width="150" height="40" align="left" class="attrName">更换房间类型:</td>
+            <td style="display: none;: hidden;"><input type="text" id="population" value="{{population}}"></td>
+            <td height="40" align="left"><select name="roomType" id="roomType" ng-model="value" ng-change="getRoom()">
+                <option value="普通单间">普通单间</option>
+                <option value="普通双间">普通双间</option>
+                <option value="豪华单间">豪华单间</option>
+                <option value="豪华双间">豪华双间</option>
+                <option value="贵宾套房">贵宾套房</option>
+                <option value="总统套房">总统套房</option>
 
-                </select>
+            </select></td>
+            <td height="40" align="left" class="attrName">房间价格:</td>
+            <td height="40" align="left">
+                <input type="text" disabled value="{{priceString}}">
+
             </td>
-            <td height="40" colspan="2" align="left" class="attrName">入住人数:</td>
-            <td height="40" colspan="2" align="left"><input type="number" value="1"></td>
+            <td height="40" colspan="2" align="left" class="attrName" >新房间号:</td>
+            <td height="40" colspan="2" align="left"><select name="roomNum" id="roomNum" >
+                <option ng-repeat="x in enableRoomNum" value="{{x}}" >{{x}}</option>
+
+            </select></td>
         </tr>
         <tr>
             <td height="40" align="left" class="attrName">入住日期:</td>
-            <td height="40" colspan="2" align="left"><input type="date" name="inTime"></td>
-            <td height="40" align="left" class="attrName">退房日期:</td>
-            <td height="40" colspan="2" align="left"><input type="date" name="outTime"></td>
+            <td height="40" colspan="2" align="left"><input type="date" name="inTime" id="intime" disabled value="2018-1-1"></td>
+            <td height="40" align="left" class="attrName" >退房日期:</td>
+            <td height="40" colspan="2" align="left" ><input type="date" name="outTime" id="outtime"  disabled></td>
             <td height="40" colspan="2" align="left" class="attrName">入住天数:</td>
-            <td height="40" colspan="2" align="left"><input type="text" value="1" disabled></td>
+            <td height="40" colspan="2" align="left"><input type="text" value="{{days}}" disabled></td>
         </tr>
         <tr>
             <td height="40" align="left" class="attrName">价格合计:</td>
-            <td height="40" colspan="2" align="left"><input type="text" name="totalMonney" value="10000元"  disabled></td>
-            <td height="40" align="left" class="attrName">需缴押金:</td>
-            <td height="40" colspan="2" align="left"><input type="text" name="yajing" value="2000元" disabled></td>
+            <td height="40" colspan="2" align="left"><input type="text" name="totalMonney" value="{{money}}"  disabled></td>
+            <td height="40" align="left" class="attrName">押金退补:</td>
+            <td height="40" colspan="2" align="left"><input type="text" name="yajing" value="{{require}}" disabled></td>
             <td height="40" colspan="2" align="left" class="attrName">填表人：</td>
             <td height="40" colspan="2" align="left"><input type="text" value="周星星" disabled></td>
         </tr>
     </table>
-    <input type="button" value="入住登记" id="submit" class="btn btn-success">
+    <input type="button" value="换房" id="submit" class="btn btn-success" ng-click="changeRoom()">
 </div>

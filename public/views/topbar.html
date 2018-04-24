@@ -45,7 +45,7 @@
                 <td align="center" valign="middle" class="attr">民族：</td>
                 <td align="center" valign="middle">{{currentUser.mingzu}}</td>
                 <td align="center" valign="middle" class="attr">出生日期：</td>
-                <td height="50" align="center" valign="middle">{{currentUser.birthday | date:"yyyy-MM-dd"}}</td>
+                <td height="50" align="center" valign="middle">{{currentUser.birthday | date:"yyyy年MM月dd日"}}</td>
             </tr>
             <tr>
                 <td align="center" valign="middle" class="attr">证件号码：</td>
@@ -55,12 +55,12 @@
             </tr>
             <tr>
                 <td align="center" valign="middle" class="attr">开始有效期：</td>
-                <td align="center" valign="middle">{{currentUser.start | date:"yyyy-MM-dd"}}</td>
+                <td align="center" valign="middle">{{currentUser.start | date:"yyyy年MM月dd日"}}</td>
                 <td align="center" valign="middle" class="attr">结束有效期：</td>
-                <td height="50" align="center" valign="middle">{{currentUser.end | date:"yyyy-MM-dd"}}</td>
+                <td height="50" align="center" valign="middle">{{currentUser.end | date:"yyyy年MM月dd日"}}</td>
             </tr>
             <tr>
-                <td height="50" colspan="5" align="center" valign="middle"><button class="read write btn-success">读取</button></td>
+                <td height="50" colspan="5" align="center" valign="middle"><button class="read write btn-success" ng-click="sendMes()">读取</button></td>
             </tr>
         </table>
     </div>

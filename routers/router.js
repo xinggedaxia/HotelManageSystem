@@ -61,7 +61,6 @@ module.exports.updatePass = function (req, res) {
         }
         var pass = md5(md5(fields.newPass) + "hotel")
         db.update("update manager set 密码='" + pass +"' where 用户名='admin'", function (result) {
-            console.log(result);
             res.json({
                 "result" : true
             });
@@ -74,8 +73,79 @@ module.exports.roomInfo = function (req,res) {
         res.json(result);
     });
 }
+module.exports.roomInfo2 = function (req,res) {
+    var roomType = req.query.roomType;
+    db.find("select * from roominfo where roomType = '"+ roomType +"'",function (result) {
+        res.json(result);
+    });
+}
 module.exports.getInfo = function (req,res) {
     db.find("select * from sfz",function (result) {
         res.json(result);
     });
+}
+
+module.exports.searchRoom = function (req,res) {
+    var intime = req.query.intime;
+    var outtime = req.query.outtime;
+    var roomType = req.query.roomType;
+
+    var allroom =[];
+    /*var intime = "2018-4-19";
+    var outtime = "2018-4-29";*/
+    //先查找入住登记表中不符合的房间
+    db.find("select * from checkin where (intime <'"+ intime + "'and outtime > '"+ intime +"') or (intime <'"+ outtime + "'and outtime > '"+ outtime +"') or (intime >='"+ intime + "'and outtime <= '"+ outtime +"')",function (result1) {
+        allroom = allroom.concat(result1);
+        //再查找预定登记表中不符合的房间
+        db.find("select * from  roomorder where (intime <'"+ intime + "'and outtime > '"+ intime +"') or (intime <'"+ outtime + "'and outtime > '"+ outtime +"') or (intime >='"+ intime + "'and outtime <= '"+ outtime +"')",function (result2) {
+            allroom = allroom.concat(result2);
+            // console.log(allroom);
+            res.send(allroom);
+        });
+    });
+    //再查找预定登记表中不符合的房间
+
+    //拿到所有房间，将不符合的踢出
+
+}
+// 入住登记
+module.exports.checkIn = function (req,res) {
+    var roomNum = req.query.roomNum;
+    var number = req.query.number;
+    var intime = req.query.intime;
+    var outtime = req.query.outtime;
+    var population = req.query.population;
+    var deposit = req.query.deposit;
+
+    db.insert("INSERT INTO checkin(roomNum,number,intime,outtime,population,deposit) VALUES('"+ roomNum +"','"+number +"','"+intime +"','"+outtime +"','"+ population+"','"+deposit +"')",function (result) {
+        res.send(result);
+    });
+
+}
+// 入住登记表中的查询
+module.exports.searchCheckIn = function (req,res) {
+    var number = req.query.number;
+    db.find("select * from checkin where number = '"+ number +"'",function (result) {
+        res.json(result);
+    });
+
+}
+
+
+// 删除原有入住登记表
+module.exports.deleteCheckIn = function (req,res) {
+    var number = req.query.number;
+    var roomNum = req.query.roomNum;
+    db.remove("delete from checkin where roomNum='"+ roomNum +"' and number = '"+ number +"'",function (result) {
+        res.json(result);
+    });
+}
+
+// 根据房间号查询房间信息
+module.exports.findOneRoom = function (req,res) {
+    var roomNum = req.query.roomNum;
+    db.find("select * from roominfo where roomNum = '"+ roomNum +"'",function (result) {
+        res.json(result);
+    });
+
 }

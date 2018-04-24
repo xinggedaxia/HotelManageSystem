@@ -24,8 +24,8 @@ module.exports.find = function (sql,callback) {
 
 }
 //增加数据
-module.exports.insert = function (addSql,addSqlParams,callback) {
-    connection.query(addSql,addSqlParams,function (err, result) {
+module.exports.insert = function (addSql,callback) {
+    connection.query(addSql,function (err, result) {
         if(err){
             console.log('[INSERT ERROR] - ',err.message);
             callback(false);

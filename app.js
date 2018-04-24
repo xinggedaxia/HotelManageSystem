@@ -30,7 +30,13 @@ app.get("/adminLeave",router.adminLeave);
 app.get("/ancellation",router.ancellation);
 app.post("/updatePass",router.updatePass);
 app.get("/roomInfo",router.roomInfo);
+app.get("/roomInfo2",router.roomInfo2);
 app.get("/getInfo",router.getInfo);
+app.get("/searchRoom",router.searchRoom);
+app.get("/checkIn",router.checkIn);
+app.get("/searchCheckIn",router.searchCheckIn);
+app.get("/deleteCheckIn",router.deleteCheckIn);
+app.get("/findOneRoom",router.findOneRoom);
 app.use(function (req, res) {
     if(req.session.login == false || req.session.login == undefined){
         console.log("非法闯入");
