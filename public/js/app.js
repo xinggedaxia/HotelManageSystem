@@ -60,7 +60,8 @@ App.config(['$stateProvider', '$locationProvider', "$urlRouterProvider", functio
         url : "/fangjianguanli",
             views: {
                 "mainContent": {
-                    templateUrl:  "/views/fangjianguanli/fangjianguanli.html"
+                    templateUrl:  "/views/fangjianguanli/fangjianguanli.html",
+                    controller : "roomManage"
                 }
             }
     })

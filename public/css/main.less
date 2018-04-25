@@ -125,6 +125,7 @@
         border-radius: 8px;
         margin-bottom: 10px;
         cursor: pointer;
+        background-color: #419641;
 
       }
       .free {
@@ -371,3 +372,73 @@
 
   }
 }
+
+/*
+房间管理
+*/
+
+
+//房价
+ tr.title2{
+  background-color: #00aa68;
+  td{
+    color: #fff;
+  }
+}
+
+#roomPrice input{
+  display: inline-block;
+  width: 50px;
+
+
+
+}
+.caozuo{
+  font-weight: bold;
+  cursor: pointer;
+  &:hover{
+    background-color: lightgray;
+  }
+}
+#box{
+  height: 274px;
+  overflow: hidden;
+}
+#roomManage{
+  margin-top: 30px;
+  .roomList2{
+
+    &:nth-child(2n){
+      background-color: #f6f5ec;
+    }
+  }
+  .roomstate{
+    input{
+      margin-right: 30px;
+    }
+  }
+
+  #search{
+    border: 4px solid purple;
+    font-weight: bold;
+    input{
+      margin-right: 30px;
+    }
+    #roomNum{
+      display: block;
+      margin: 0 auto;
+      width: 50%;
+      height: 100%;
+      border: none;
+      text-align: center;
+    }
+    #price{
+      display: inline-block;
+      width: 40px;
+      margin-right: 0px;
+    }
+
+
+  }
+}
+

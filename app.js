@@ -37,6 +37,12 @@ app.get("/checkIn",router.checkIn);
 app.get("/searchCheckIn",router.searchCheckIn);
 app.get("/deleteCheckIn",router.deleteCheckIn);
 app.get("/findOneRoom",router.findOneRoom);
+app.get("/updatePrice",router.updatePrice);
+app.get("/searchRoom2",router.searchRoom2);
+app.get("/repairRoom",router.repairRoom);
+app.get("/addRoom",router.addRoom);
+app.get("/updateRoom",router.updateRoom);
+app.get("/delRoom",router.delRoom);
 app.use(function (req, res) {
     if(req.session.login == false || req.session.login == undefined){
         console.log("非法闯入");

@@ -15,40 +15,40 @@
         <div class="rooms">
             <span class="roomType">普通单间</span>
             <ul>
-                <li ng-repeat="x in roomInfo" ng-if="x.roomType == '普通单间'" ng-class="x.state">{{x.roomNum}}</li>
-            </ul>
-        </div>
-
-        <div class="rooms">
-            <span class="roomType">豪华单间</span>
-            <ul>
-                <li ng-repeat="x in roomInfo" ng-if="x.roomType == '豪华单间'" ng-class="x.state">{{x.roomNum}}</li>
+                <li ng-repeat="x in roomInfo" ng-if="x.roomType == '普通单间'"  id="{{x.roomNum}}">{{x.roomNum}}</li>
             </ul>
         </div>
         <div class="rooms">
             <span class="roomType">普通双间</span>
             <ul>
-                <li ng-repeat="x in roomInfo" ng-if="x.roomType == '普通双间'" ng-class="x.state">{{x.roomNum}}</li>
+                <li ng-repeat="x in roomInfo" ng-if="x.roomType == '普通双间'" id="{{x.roomNum}}" >{{x.roomNum}}</li>
             </ul>
         </div>
         <div class="rooms">
+            <span class="roomType">豪华单间</span>
+            <ul>
+                <li ng-repeat="x in roomInfo" ng-if="x.roomType == '豪华单间'"  id="{{x.roomNum}}">{{x.roomNum}} </li>
+            </ul>
+        </div>
+
+        <div class="rooms">
             <span class="roomType">豪华双间</span>
             <ul>
-                <li ng-repeat="x in roomInfo" ng-if="x.roomType == '豪华双间'" ng-class="x.state">{{x.roomNum}}</li>
+                <li ng-repeat="x in roomInfo" ng-if="x.roomType == '豪华双间'" ng-class="x.state" id="{{x.roomNum}}">{{x.roomNum}}</li>
 
             </ul>
         </div>
         <div class="rooms">
             <span class="roomType">贵宾套房</span>
             <ul>
-                <li ng-repeat="x in roomInfo" ng-class="x.state" ng-if="x.roomType == '贵宾套房'">{{x.roomNum}}</li>
+                <li ng-repeat="x in roomInfo" ng-class="x.state" ng-if="x.roomType == '贵宾套房'" id="{{x.roomNum}}">{{x.roomNum}}</li>
 
             </ul>
         </div>
         <div class="rooms">
             <span class="roomType">总统套房</span>
             <ul>
-                <li ng-repeat="x in roomInfo"  ng-class="x.state" ng-if="x.roomType == '总统套房'">{{x.roomNum}}</li>
+                <li ng-repeat="x in roomInfo"  ng-class="x.state" ng-if="x.roomType == '总统套房'" id="{{x.roomNum}}">{{x.roomNum}}</li>
 
             </ul>
         </div>
@@ -58,10 +58,10 @@
     <div class="systemInfo">
         <h1>系统提示</h1>
         <div class="infocontent">
-            <p>①:李尔康未结账就跑了</p>
-            <p>②:李尔康未结账就跑了</p>
-            <p>③:李尔康未结账就跑了</p>
-            <p>④:李尔康未结账就跑了</p>
+            <p>①:A01房已经到期，请提醒办理退房手续</p>
+            <p>②:A02房已经到期，请提醒办理退房手续</p>
+            <p>③:A03房已经到期，请提醒办理退房手续</p>
+            <p>④:A04房已经到期，请提醒办理退房手续</p>
         </div>
     </div>
     <div class="currentTime">{{time}}</div>

@@ -40,15 +40,18 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
                         "roomNum" : $scope.oldRoomNum
                     },function (result) {
                         //重置表单
-
-                        $scope.myPrice = 0;
+                        $scope.currentUser = {
+                            "sex": "男"
+                        };
+                        $scope.myPrice = 100;
                         $scope.myType = "普通单间";
-                        $scope.money = "";
+                        $scope.money = 0;
                         $scope.deposit = 0;
                         $("#intime").val("");
                         $("#outtime").val("");
                         $("#roomType").val("");
                         $("#population").val("1");
+                        $("#oldRoomNum").val("");
                         $scope.days = 1;
 
                         if (result == true) {
@@ -94,10 +97,13 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
         var intime = $("#intime").val();
         var outtime = $("#outtime").val();
         var roomtype = $("#roomType").val();
+        console.log(intime);
+        console.log(outtime);
 
         $scope.money = 1;
         $scope.deposit = 1;
-        $scope.days = $scope.datedifference(intime, outtime);
+        $scope.days = $scope.datedifference(intime,outtime);
+        console.log( $scope.days);
         $scope.enableRoomNum = [];
         // 入住登记
         $scope.enable = [];
@@ -117,14 +123,16 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
                 $.get("roomInfo2", {"roomType": roomtype}, function (result2) {
 
                     //获取房价
+                    console.log($scope.days);
                     $scope.price = result2[0].price;
+                    console.log($scope.price);
                     $scope.priceString = $scope.price + "元/天";
                     $scope.money = $scope.price * $scope.days + "元";
                     $scope.deposit = $scope.price * $scope.days * 1.5 + "元";
 
                     //计算退补押金金额
                     var num = $scope.price * $scope.days * 1.5 - $scope.oldDeposit;
-                    $scope.require = (num)>=0? "补交押金"+ num+"元" : "退还押金"+ (-num) + "元";
+                    $scope.requireM = (num)>=0? "补交押金"+ num+"元" : "退还押金"+ (-num) + "元";
 
                     for (var i = 0, len = result2.length; i < len; i++) {
                         allRoomNum.push(result2[i].roomNum);
@@ -137,7 +145,8 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
                 })
             });
     }
-
+    var today = new Date();
+    $scope.today = $filter('date')(today, 'yyyy-MM-dd');
     // 提交表单--入住登记和房间预定的事件
     $scope.commit = function () {
         var roomNum = $("#roomNum").val();
@@ -379,48 +388,204 @@ myApp.controller("topBar", ["$scope", "$rootScope", "$timeout", function ($scope
 房间信息控制类
 */
 
-myApp.controller("mainContent", ["$scope", function ($scope) {
+myApp.controller("mainContent", ["$scope","$filter", function ($scope,$filter) {
 
+    // 获取今日日期
+    var today = new Date();
+    today = $filter('date')(today, 'yyyy-MM-dd');
+
+    $scope.data = [];
     // 请求房间数据
-    $.get("roomInfo", function (result) {
-        // console.log(result);
-        $scope.roomInfo = result;
+    $.get("/roomInfo",{"today":today} ,function (result) {
+        $scope.roomInfo = result.allRoom;
+        $scope.data = result.allRoom;
+        //判断改房间的状态
+        setTimeout(function () {
+            for(var i = 0,len = result.orderedRoom.length; i < len ; i++ ){
+                $("#"+ result.orderedRoom[i].roomNum).addClass("ordered");
+            }
+            for(var i = 0,len = result.repairRoom.length; i < len ; i++ ){
+                $("#"+ result.repairRoom[i].roomNum).addClass("repair");
+            }
+            for(var i = 0,len = result.usedRoom.length; i < len ; i++ ){
+                $("#"+ result.usedRoom[i].roomNum).addClass("occupied");
+            }
+        },1000)
     });
 }]);
+
+
+
+myApp.controller("roomManage",["$scope","$filter",function ($scope,$filter) {
+
+
+    var today = new Date();
+    today = $filter('date')(today, 'yyyy-MM-dd');
+
+    // 定义获取价格函数
+    $scope.getPrice = function(data,type,num){
+        // 获取房间的价格
+        for(var i = 0,len =data.allRoom.length; i < len ; i++ ){
+            if(data.allRoom[i].roomType == type){
+                $scope["price"+ num] = data.allRoom[i].price;
+                return;
+            }
+        }
+    }
+    // 初始化房间管理界面
+    $.get("/roomInfo",{"today":today} ,function (result) {
+        $scope.roomInfo = result.allRoom;
+        $scope.data = result.allRoom;
+        //设置选中状态
+        setTimeout(function () {
+            $scope.setRepair();
+        },1000);
+
+        $("#box").css("height",280+result.allRoom.length*40 + "px");
+        $scope.price1 = 0;
+        $scope.price2 = 0;
+        $scope.price3 = 0;
+        $scope.price4 = 0;
+        $scope.price5 = 0;
+        $scope.price6 = 0;
+        $scope.getPrice(result,"普通单间",1);
+        $scope.getPrice(result,"普通双间",2);
+        $scope.getPrice(result,"豪华单间",3);
+        $scope.getPrice(result,"豪华双间",4);
+        $scope.getPrice(result,"贵宾套房",5);
+        $scope.getPrice(result,"总统套房",6);
+    });
+    // 更新房价
+    $scope.updatePrcie = function () {
+        var nodes = $("#roomPrice").children();
+        var price1 = parseInt(nodes.eq(1).children().eq(0).val());
+        var price2 = parseInt(nodes.eq(2).children().eq(0).val());
+        var price3 = parseInt(nodes.eq(3).children().eq(0).val());
+        var price4 = parseInt(nodes.eq(4).children().eq(0).val());
+        var price5 = parseInt(nodes.eq(5).children().eq(0).val());
+        var price6 = parseInt(nodes.eq(6).children().eq(0).val());
+        $.get("/updatePrice",{
+            "price1" : price1,
+            "price2" : price2,
+            "price3" : price3,
+            "price4" : price4,
+            "price5" : price5,
+            "price6" : price6
+        },function (result) {
+            if(result == true){
+                $.get("/roomInfo",{"today":today} ,function (result) {
+                    //更新房间显示信息
+                    alert("更新成功！");
+                    $scope.searchRoom();
+
+                });
+            }else{
+                alert("更新失败！");
+            }
+        });
+    }
+    // 获取并设置修理中的房间
+    $scope.setRepair = function () {
+        $.get("/repairRoom",function (result) {
+            for(var i = 0,len = result.length; i < len ; i++ ){
+                $("#"+result[i].roomNum).prop("checked",true);
+            }
+        });
+    }
+    // 房间查询
+    $scope.searchRoom = function () {
+        var roomNum = $("#roomNum").val();
+        var roomType = $("#roomType").val();
+        var price =  $("#price").val();
+        var roomState = ($("#normal").is(':checked'))?1:0;
+        $("#box").css("transition","none");
+        $("#box").css("height","274px");
+        $.get("/searchRoom2",{
+            "roomNum" :roomNum,
+            "roomType" :roomType,
+            "price" :price,
+            "roomState" :roomState
+        },function (result) {
+            $("#box").css("transition","height,1s");
+            $("#box").css("height",274+result.length*40 + "px");
+            $scope.roomInfo = result;
+            console.log(result);
+            setTimeout(function () {
+                $(".checked").prop("checked",true);
+                $scope.setRepair();
+            },1000);
+        });
+    }
+    $scope.addRoom = function () {
+        var roomNum = $("#roomNum").val();
+        var roomType = $("#roomType").val();
+        var price =  $("#price").val();
+        var roomState = ($("#normal").is(':checked'))?1:0;
+
+        if(roomNum == "" || roomType == "所有类型" || price==""){
+            alert("输入有误,请重新输入!");
+        }
+        else{
+            $.get("/addRoom",{
+                "roomNum" :roomNum,
+                "roomType" :roomType,
+                "price" :price,
+                "roomState" :roomState
+            },function (result) {
+                if(result == true){
+                    alert("添加成功!");
+                    $scope.searchRoom();
+
+                }
+                else{
+                    alert("添加失败!");
+                }
+            });
+        }
+
+    }
+    $scope.updateRoom = function (rooNum) {
+        var roomState = ($("#"+rooNum).is(':checked'))?0:1;
+        $.get("/updateRoom",{"roomNum":rooNum,"roomState":roomState},function (result) {
+            if(result ==true){
+                alert("更新成功!");
+                $scope.searchRoom();
+            }else{
+                alert("更新失败!")
+            }
+        });
+    }
+    $scope.delRoom = function (roomNum) {
+        $.get("/delRoom",{"roomNum":roomNum},function (result) {
+            if(result == true){
+                alert("删除成功!");
+                $scope.searchRoom();
+            }
+            else{
+                alert("删除失败!");
+            }
+        })
+    }
+}]);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 图表绘制
 */
-myApp.controller("today", ["$scope", function ($scope) {
-    var myChart = echarts.init(document.getElementById('main'));
-    // 指定图表的配置项和数据
-    var option = {
-        title: {
-            text: 'ECharts 入门示例'
-        },
-        tooltip: {},
-        legend: {
-            data: ['销量']
-        },
-        xAxis: {
-            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-        },
-        yAxis: {},
-        series: [{
-            name: '销量',
-            type: 'bar',
-            data: [5, 20, 36, 10, 10, 20]
-        }]
-    };
 
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
 
-// 今日收入
-// 本月收入
-// 今年收入
-
-}]);
 myApp.controller("today", ["$scope", function ($scope) {
     var myChart = echarts.init(document.getElementById('main'));
     // 指定图表的配置项和数据
