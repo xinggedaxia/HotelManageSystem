@@ -15,197 +15,62 @@
     </style>
 </head>
 <body>
-<table border="1">
+<table border="1"  ng-click="method1('myTb')" >
     <tr>
         <td height="50" colspan="8" align="center"><strong>2018年4月员工工资表</strong></td>
-        <td align="center" bgcolor="#00FFFF">生成表格</td>
+        <td align="center"  ng-click="method1('myTb')" style="cursor:pointer;" class="caozuo">生成表格</td>
     </tr>
-    <tr>
-        <td width="100" height="30" align="center" bgcolor="#999999">员工编号</td>
-        <td width="100" align="center" bgcolor="#999999">姓名</td>
-        <td width="100" align="center" bgcolor="#999999">职务</td>
-        <td width="100" align="center" bgcolor="#999999">基本工资</td>
-        <td width="100" align="center" bgcolor="#999999">迟到</td>
-        <td width="100" align="center" bgcolor="#999999">未到</td>
-        <td width="100" align="center" bgcolor="#999999">早退</td>
-        <td width="100" align="center" bgcolor="#999999">加班</td>
-        <td width="100" align="center" bgcolor="#999999">合计工资</td>
+    <tr style="color:white">
+        <td width="100" height="30" align="center" bgcolor="#00aa68">员工编号</td>
+        <td width="100" align="center" bgcolor="#00aa68">姓名</td>
+        <td width="100" align="center" bgcolor="#00aa68">职务</td>
+        <td width="100" align="center" bgcolor="#00aa68">基本工资</td>
+        <td width="100" align="center" bgcolor="#00aa68">迟到</td>
+        <td width="100" align="center" bgcolor="#00aa68">未到</td>
+        <td width="100" align="center" bgcolor="#00aa68">早退</td>
+        <td width="100" align="center" bgcolor="#00aa68">加班</td>
+        <td width="100" align="center" bgcolor="#00aa68">合计工资</td>
     </tr>
-    <tr>
-        <td height="30" align="center">输入员工编号</td>
-        <td align="center">输入员工姓名</td>
-        <td align="center">&nbsp;</td>
-        <td align="center">&nbsp;</td>
-        <td align="center">&nbsp;</td>
-        <td align="center">&nbsp;</td>
-        <td align="center">&nbsp;</td>
-        <td align="center">&nbsp;</td>
-        <td align="center">查找员工</td>
+    <tr ng-repeat="x in employeeInfo3">
+        <td height="30" align="center">{{x.number}}</td>
+        <td align="center">{{x.name}}</td>
+        <td align="center">{{x.job}}</td>
+        <td align="center">{{x.wage}}元/月</td>
+        <td align="center">{{x.chidao}}次</td>
+        <td align="center">{{x.weidao}}次</td>
+        <td align="center">{{x.zaotui}}次</td>
+        <td align="center">{{x.jiaban}}次</td>
+        <td align="center">{{(x.wage -x.chidao*x.wage/30*0.1- x.weidao*x.wage/30-x.zaotui*x.wage/30*0.1+x.jiaban*x.wage/30*0.2)|number:0}}元</td>
     </tr>
+</table>
+
+
+
+<table border="1" id="myTb" ng-click="method1('myTb')" style="display: none">
     <tr>
-        <td height="30" align="center">z0002</td>
-        <td align="center">地方</td>
-        <td align="center">系统管理员</td>
-        <td align="center">100000元/月</td>
-        <td align="center">3次</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">1次</td>
-        <td align="center">9000元</td>
+        <td height="50" colspan="9" align="center"><strong>2018年4月员工工资表</strong></td>
     </tr>
-    <tr>
-        <td height="30" align="center">z0003</td>
-        <td align="center">发送</td>
-        <td align="center">总经理</td>
-        <td align="center">100000元/月</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">1次</td>
-        <td align="center">9000元</td>
+    <tr style="color:white">
+        <td width="100" height="30" align="center" bgcolor="#00aa68">员工编号</td>
+        <td width="100" align="center" bgcolor="#00aa68">姓名</td>
+        <td width="100" align="center" bgcolor="#00aa68">职务</td>
+        <td width="100" align="center" bgcolor="#00aa68">基本工资</td>
+        <td width="100" align="center" bgcolor="#00aa68">迟到</td>
+        <td width="100" align="center" bgcolor="#00aa68">未到</td>
+        <td width="100" align="center" bgcolor="#00aa68">早退</td>
+        <td width="100" align="center" bgcolor="#00aa68">加班</td>
+        <td width="100" align="center" bgcolor="#00aa68">合计工资</td>
     </tr>
-    <tr>
-        <td height="30" align="center">z0004</td>
-        <td align="center">功耗发热</td>
-        <td align="center">主管</td>
-        <td align="center">100000元/月</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">1次</td>
-        <td align="center">9000元</td>
-    </tr>
-    <tr>
-        <td height="30" align="center">z0005</td>
-        <td align="center">阿三发射点</td>
-        <td align="center">服务员</td>
-        <td align="center">100000元/月</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">1次</td>
-        <td align="center">9000元</td>
-    </tr>
-    <tr>
-        <td height="30" align="center">z0006</td>
-        <td align="center">啊师傅</td>
-        <td align="center">服务员</td>
-        <td align="center">100000元/月</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">1次</td>
-        <td align="center">9000元</td>
-    </tr>
-    <tr>
-        <td height="30" align="center">z0007</td>
-        <td align="center">就 </td>
-        <td align="center">服务员</td>
-        <td align="center">100000元/月</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">1次</td>
-        <td align="center">9000元</td>
-    </tr>
-    <tr>
-        <td height="30" align="center">z0008</td>
-        <td align="center">腐干</td>
-        <td align="center">服务员</td>
-        <td align="center">100000元/月</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">1次</td>
-        <td align="center">9000元</td>
-    </tr>
-    <tr>
-        <td height="30" align="center">z0009</td>
-        <td align="center">爹给</td>
-        <td align="center">服务员</td>
-        <td align="center">100000元/月</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">1次</td>
-        <td align="center">9000元</td>
-    </tr>
-    <tr>
-        <td height="30" align="center">z0008</td>
-        <td align="center">腐干</td>
-        <td align="center">服务员</td>
-        <td align="center">100000元/月</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">1次</td>
-        <td align="center">9000元</td>
-    </tr>
-    <tr>
-        <td height="30" align="center">z0008</td>
-        <td align="center">腐干</td>
-        <td align="center">服务员</td>
-        <td align="center">100000元/月</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">1次</td>
-        <td align="center">9000元</td>
-    </tr>
-    <tr>
-        <td height="30" align="center">z0008</td>
-        <td align="center">腐干</td>
-        <td align="center">服务员</td>
-        <td align="center">100000元/月</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">1次</td>
-        <td align="center">9000元</td>
-    </tr>
-    <tr>
-        <td height="30" align="center">z0008</td>
-        <td align="center">腐干</td>
-        <td align="center">服务员</td>
-        <td align="center">100000元/月</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">1次</td>
-        <td align="center">9000元</td>
-    </tr>
-    <tr>
-        <td height="30" align="center">z0008</td>
-        <td align="center">腐干</td>
-        <td align="center">服务员</td>
-        <td align="center">100000元/月</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">1次</td>
-        <td align="center">9000元</td>
-    </tr>
-    <tr>
-        <td height="30" align="center">z0008</td>
-        <td align="center">腐干</td>
-        <td align="center">服务员</td>
-        <td align="center">100000元/月</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">1次</td>
-        <td align="center">9000元</td>
-    </tr>
-    <tr>
-        <td height="30" align="center">z0008</td>
-        <td align="center">腐干</td>
-        <td align="center">服务员</td>
-        <td align="center">100000元/月</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">0次</td>
-        <td align="center">1次</td>
-        <td align="center">9000元</td>
+    <tr ng-repeat="x in employeeInfo3">
+        <td height="30" align="center">{{x.number}}</td>
+        <td align="center">{{x.name}}</td>
+        <td align="center">{{x.job}}</td>
+        <td align="center">{{x.wage}}元/月</td>
+        <td align="center">{{x.chidao}}次</td>
+        <td align="center">{{x.weidao}}次</td>
+        <td align="center">{{x.zaotui}}次</td>
+        <td align="center">{{x.jiaban}}次</td>
+        <td align="center">{{(x.wage -x.chidao*x.wage/30*0.1+ x.weidao*x.wage/30+x.zaotui*x.wage/30*0.1+x.jiaban*x.wage/30*0.2)|number:0}}元</td>
     </tr>
 </table>
 </body>

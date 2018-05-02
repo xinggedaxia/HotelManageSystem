@@ -43,6 +43,19 @@ app.get("/repairRoom",router.repairRoom);
 app.get("/addRoom",router.addRoom);
 app.get("/updateRoom",router.updateRoom);
 app.get("/delRoom",router.delRoom);
+app.get("/employeeInfo",router.employeeInfo);
+app.get("/emSearch",router.emSearch);
+app.get("/emAdd",router.emAdd);
+app.get("/changeEm",router.changeEm);
+app.get("/delEm",router.delEm);
+app.get("/kaoqing",router.kaoqing);
+app.get("/employeeKaoQing",router.employeeKaoQing);
+app.get("/seachRoom2",router.seachRoom2);
+app.get("/searchRoomOrder",router.searchRoomOrder);
+app.get("/deleteOrder",router.deleteOrder);
+
+
+
 app.use(function (req, res) {
     if(req.session.login == false || req.session.login == undefined){
         console.log("非法闯入");

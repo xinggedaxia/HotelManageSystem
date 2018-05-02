@@ -1,4 +1,31 @@
 <div class="room col-lg-8">
+ <!--  <div id="roomInfo">
+       <div class="sanjiao"></div>
+       <table border="1" >
+           <tr>
+               <td height="36" colspan="2" align="center"><strong>入住信息</strong></td>
+           </tr>
+           <tr>
+               <td width="76" height="36" align="center"> 入住时间：</td>
+               <td width="112" height="36" align="center">2018-05-22</td>
+           </tr>
+           <tr>
+               <td width="76" height="36" align="center">退房时间：</td>
+               <td width="112" height="36" align="center">2018-05-22</td>
+           </tr>
+           <tr>
+               <td height="36" colspan="2" align="center"><strong>预定信息</strong></td>
+           </tr>
+           <tr>
+               <td width="76" height="36" align="center">入住日期：</td>
+               <td width="112" height="36" align="center">2018-05-22</td>
+           </tr>
+           <tr>
+               <td width="76" height="36" align="center">退订日期：</td>
+               <td width="112" height="36" align="center">2018-05-22</td>
+           </tr>
+       </table>
+   </div>-->
     <div class="state">
         <ul>
             <li><span></span>
@@ -58,10 +85,7 @@
     <div class="systemInfo">
         <h1>系统提示</h1>
         <div class="infocontent">
-            <p>①:A01房已经到期，请提醒办理退房手续</p>
-            <p>②:A02房已经到期，请提醒办理退房手续</p>
-            <p>③:A03房已经到期，请提醒办理退房手续</p>
-            <p>④:A04房已经到期，请提醒办理退房手续</p>
+            <p ng-repeat="x in info">{{x}}</p>
         </div>
     </div>
     <div class="currentTime">{{time}}</div>

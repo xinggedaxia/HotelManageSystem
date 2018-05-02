@@ -36,7 +36,7 @@
             <td height="40" colspan="2" align="center" >操作</td>
         </tr>
         <tr id="search" >
-            <td height="40" align="center"><input type="text"  placeholder="在此输入房间号" id="roomNum"></td>
+            <td height="40" align="center"><input type="text"  placeholder="在此输入房间号" id="roomNum"><span class="glyphicon glyphicon-ok used"></span></td>
             <td height="40" align="center"><select name="roomType" id="roomType">
                 <option value="所有类型">所有类型</option>
                 <option value="普通单间">普通单间</option>
@@ -45,10 +45,10 @@
                 <option value="豪华双间">豪华双间</option>
                 <option value="贵宾套房">贵宾套房</option>
                 <option value="总统套房">总统套房</option>
-            </select></td>
-            <td height="40" align="center"><input type="text" value="" id="price">元/天</td>
+            </select><span class="glyphicon glyphicon-ok used"></span></td>
+            <td height="40" align="center"><input type="text" value="" id="price">元/天<span class="glyphicon glyphicon-ok used"></span></td>
             <td height="40" align="center">正常<input type="radio" name="1" id="normal" checked>维修中<input
-                    type="radio" name="1" value="1" id="repair"></td>
+                    type="radio" name="1" value="1" id="repair"><span class="glyphicon glyphicon-ok used" style="display: block;"></span></td>
             <td height="40" align="center" class="caozuo" ng-click="searchRoom()">查找</td>
             <td height="40" align="center" class="caozuo" ng-click="addRoom()">增加</td>
         </tr>

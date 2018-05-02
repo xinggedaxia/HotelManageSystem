@@ -52,6 +52,7 @@
   height: 500px;
   border: 3px solid gray;
   border-radius: 10px;
+  position: relative;
 }
 .room .state {
   height: 40px;
@@ -131,6 +132,26 @@
 .allroom .rooms ul .repair {
   background-color: gray;
 }
+#roomInfo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: pink ;
+  color: white;
+  border-radius: 10px;
+}
+#roomInfo table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+#roomInfo .sanjiao {
+  position: absolute;
+  top: 90px;
+  left: -40px;
+  border: 20px solid transparent;
+  border-bottom: 20px solid #419641;
+  transform: rotateZ(-90deg);
+}
 .info {
   height: 500px;
 }
@@ -162,13 +183,13 @@
   background-color: #f3f3f3;
 }
 .checkin {
-  height: 500px;
+  box-shadow: 6px 6px 6px;
   padding-top: 8px;
-  border: 3px solid gray;
-  border-radius: 10px;
+  padding-bottom: 5px;
 }
 .checkin table {
   margin: 0 auto;
+  margin-bottom: 5px;
 }
 .checkin table .attrName {
   font-weight: bold;
@@ -306,7 +327,7 @@
   margin-top: -151px;
   background-color: #f8f8f8;
   z-index: 99999999;
-  border: 5px solid #5942df;
+  border: 5px solid #d71345;
   border-radius: 15px;
   overflow: hidden;
 }
@@ -337,6 +358,7 @@
   margin: 0 auto;
   width: 60px;
   height: 30px;
+  margin-bottom: 8px;
 }
 /*
 房间管理
@@ -346,6 +368,17 @@ tr.title2 {
 }
 tr.title2 td {
   color: #fff;
+}
+#search td {
+  position: relative;
+}
+#search .used {
+  display: none;
+  position: absolute;
+  right: 4px;
+  top: 8px;
+  font-size: 20px;
+  color: red;
 }
 #roomPrice input {
   display: inline-block;
@@ -390,4 +423,89 @@ tr.title2 td {
   display: inline-block;
   width: 40px;
   margin-right: 0px;
+}
+/*
+员工管理
+*/
+.box2 {
+  height: 114px;
+  overflow: hidden;
+}
+#employeeInfo .emInfo:nth-child(2n) {
+  background-color: #f6f5ec;
+}
+#employeeInfo .emInfo:nth-child(2n) input {
+  background-color: #f6f5ec;
+}
+#employeeInfo .titleEm {
+  color: white;
+}
+#employeeInfo input {
+  display: inline-block;
+  width: 123px;
+  height: 100%;
+  border: none;
+  text-align: center;
+}
+#employeeInfo input:focus {
+  background-color: #65c294 !important;
+}
+#employeeInfo .title3 {
+  border: 4px solid purple;
+  overflow: hidden;
+}
+#employeeInfo .title3 td {
+  position: relative;
+}
+#employeeInfo .title3 .used {
+  display: none;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  font-size: 20px;
+  color: red;
+}
+.title4 {
+  color: white;
+}
+.inputInfo {
+  border: 4px solid purple;
+}
+.inputInfo input {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  border: none;
+}
+.inputInfo input:focus {
+  background-color: #65c294 !important;
+}
+.kqContent:nth-child(2n) {
+  background-color: #f6f5ec;
+}
+#search2 {
+  cursor: pointer;
+  font-weight: bold;
+}
+#search2:hover {
+  background-color: lightgray;
+}
+.box3 {
+  height: auto;
+  overflow: hidden;
+}
+.choose {
+  cursor: pointer;
+}
+.choose:hover {
+  background-color: gray;
+}
+.choose span {
+  display: none;
+}
+.selected span {
+  display: block;
+}
+#demo {
+  background-color: blue;
 }

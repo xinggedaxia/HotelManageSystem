@@ -59,6 +59,7 @@
   height: 500px;
   border: 3px solid gray;
   border-radius: 10px;
+  position: relative;
   .state {
     height: 40px;
     ul {
@@ -144,6 +145,31 @@
   }
 }
 
+//房间信息框
+#roomInfo{
+  position: absolute;
+  left:0;
+  top: 0;
+  background-color: pink ;
+  color : white;
+  border-radius: 10px;
+  //overflow: hidden;
+  table{
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .sanjiao{
+    position: absolute;
+    top:90px;
+    left: -40px;
+    border: 20px solid transparent;
+    border-bottom: 20px solid #419641;
+    transform: rotateZ(-90deg);
+
+  }
+}
+
+
 .info {
   height: 500px;
 
@@ -180,13 +206,17 @@
   }
 }
 
+
+
 .checkin {
-  height: 500px;
+
+  box-shadow: 6px 6px 6px;
   padding-top: 8px;
-  border: 3px solid gray;
-  border-radius: 10px;
+  padding-bottom: 5px;
   table {
     margin: 0 auto;
+    margin-bottom: 5px;
+
     .attrName {
       font-weight: bold;
     }
@@ -339,7 +369,7 @@
   margin-top: -151px;
   background-color: #f8f8f8;
   z-index: 99999999;
-  border: 5px solid #5942df;
+  border: 5px solid #d71345;
   border-radius: 15px;
   overflow: hidden;
   img{
@@ -369,6 +399,7 @@
     margin: 0 auto;
     width: 60px;
     height: 30px;
+    margin-bottom: 8px;
 
   }
 }
@@ -381,11 +412,26 @@
 //房价
  tr.title2{
   background-color: #00aa68;
+
   td{
     color: #fff;
+
   }
 }
+#search{
+  td{
+    position: relative;
+  }
+  .used{
+    display: none;
+    position: absolute;
+    right:4px;
+    top: 8px;
+    font-size: 20px;
+    color:red;
 
+  }
+}
 #roomPrice input{
   display: inline-block;
   width: 50px;
@@ -442,3 +488,101 @@
   }
 }
 
+/*
+员工管理
+*/
+
+.box2{
+  height: 114px;
+  overflow: hidden;
+}
+
+#employeeInfo{
+  .emInfo:nth-child(2n){
+    background-color: #f6f5ec;
+  }
+  .emInfo:nth-child(2n) input {
+    background-color: #f6f5ec;
+  }
+
+  .titleEm{
+    color : white;
+  }
+  input{
+    display: inline-block;
+    width: 123px;
+    height: 100%;
+    border: none;
+    text-align: center;
+    &:focus{
+      background-color: #65c294 !important;
+    }
+
+  }
+  .title3{
+    border: 4px solid purple;
+    overflow: hidden;
+    td{
+      position: relative;
+    }
+    .used{
+      display: none;
+      position: absolute;
+      right:4px;
+      top: 4px;
+      font-size: 20px;
+      color:red;
+
+    }
+  }
+}
+
+//员工考勤
+.title4{
+  color:white;
+}
+.inputInfo{
+  border: 4px solid purple;
+}
+.inputInfo input{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  text-align: center;
+  border: none;
+  &:focus{
+    background-color: #65c294 !important;
+  }
+}
+.kqContent:nth-child(2n){
+  background-color: #f6f5ec;
+}
+#search2{
+  cursor: pointer;
+  font-weight: bold;
+  &:hover{
+    background-color: lightgray;
+  }
+}
+.box3{
+  height: auto;
+  overflow: hidden;
+}
+.choose{
+  cursor: pointer;
+  &:hover{
+    background-color: gray;
+  }
+   span{
+    display: none;
+  }
+
+}
+.selected {
+  span{
+    display: block;
+  }
+}
+#demo{
+  background-color: blue;
+}

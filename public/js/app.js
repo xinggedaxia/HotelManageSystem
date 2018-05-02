@@ -69,7 +69,8 @@ App.config(['$stateProvider', '$locationProvider', "$urlRouterProvider", functio
         url : "/yuangongxinxi",
             views: {
                 "mainContent": {
-                    templateUrl:  "/views/yuanGongGuanLi/yuanGongXinXi.html"
+                    templateUrl:  "/views/yuanGongGuanLi/yuanGongXinXi.html",
+                    controller : "ygxx"
                 }
             }
     })
@@ -78,6 +79,7 @@ App.config(['$stateProvider', '$locationProvider', "$urlRouterProvider", functio
             views: {
                 "mainContent": {
                     templateUrl:  "/views/yuanGongGuanLi/yuanGongKaoQing.html",
+                    controller : "ygkq"
                 }
             }
     })
@@ -85,7 +87,8 @@ App.config(['$stateProvider', '$locationProvider', "$urlRouterProvider", functio
         url : "/gongzijiesuan",
             views: {
                 "mainContent": {
-                    templateUrl:  "/views/yuanGongGuanLi/yuanGongGongZi.html"
+                    templateUrl:  "/views/yuanGongGuanLi/yuanGongGongZi.html",
+                    controller : "gzjs"
                 }
             }
     })
