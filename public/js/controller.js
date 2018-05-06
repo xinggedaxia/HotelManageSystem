@@ -13,26 +13,64 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
     }, 1000);
 
 
+    //显示操作结果提示
+    $rootScope.showMes = function (info) {
+        $(".mes").css("display","block");
+       setTimeout(function () {
+           $(".mes").css({"transform":"scale(1)","opacity":"1"});
+           $(".mes").text(info);
+           setTimeout(function () {
+               $(".mes").css({"transform":"scale(0)","opacity":"0"});
+               setTimeout(function () {
+                   $(".mes").css("display","none");
+               },500)
+           },1500)
+       },100)
+    }
+    $rootScope.showMes2 = function (info) {
+        $(".mes2").css("display","block");
+        setTimeout(function () {
+            $(".mes2").css({"transform":"scale(1)","opacity":"1"});
+            $(".mes2").text(info);
+            setTimeout(function () {
+                $(".mes2").css({"transform":"scale(0)","opacity":"0"});
+                setTimeout(function () {
+                    $(".mes2").css("display","none");
+                },500)
+            },1500)
+        },100)
+    }
+
+
     //获取今日将要过期的房间信息
     var today = new Date();
     var date = $filter('date')(today, "yyyy-MM-dd");
-    console.log(date);
+    // console.log(date);
     var xuhao = ["①", "②", "③", "④", "⑤", "⑥"];
     $.get("/seachRoom2", {"outtime": date}, function (res) {
         $scope.info = [];
-        if (today.getHours() < 12) {
-            for (var i = 0, len = res.length; i < len; i++) {
-                var txt = xuhao[i] + ":" + res[i].roomNum + "房即将到期，请提醒办理退房手续！";
-                $scope.info.push(txt);
-            }
-        } else {
-            for (var i = 0, len = res.length; i < len; i++) {
-                var txt = xuhao[i] + ":" + res[i].roomNum + "房已经到期，请提醒办理退房手续！";
-                $scope.info.push(txt);
+        if(res.length == 0){
+            var txt = "暂无消息！";
+            $scope.info.push(txt);
+        }else{
+
+            if (today.getHours() < 12) {
+                for (var i = 0, len = res.length; i < len; i++) {
+                    var txt = xuhao[i] + ":" + res[i].roomNum + "房即将到期，请提醒办理退房手续！";
+                    $scope.info.push(txt);
+                }
+            } else {
+                for (var i = 0, len = res.length; i < len; i++) {
+                    var txt = xuhao[i] + ":" + res[i].roomNum + "房已经到期，请提醒办理退房手续！";
+                    $scope.info.push(txt);
+                }
             }
         }
+
     });
 
+
+    $scope.oldDeposit = 0;
 
     // 获取身份证读取模块传过来了身份证信息
 
@@ -42,9 +80,16 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
         // 判断当前页面位置
         if (window.location.href.slice(23) == "huanfang" || window.location.href.slice(23) == "tuifang") {
 
+
+
+
             //查询当前用户的入住信息
             $.get("/searchCheckIn", {"number": $scope.currentUser.number}, function (result) {
                 var result = result[0];
+                if(!result){
+                    $rootScope.showMes2("暂无该用户的入住信息！");
+                    return;
+                }
                 $scope.oldRoomNum = result.roomNum;
                 $scope.oldNumber = result.number;
                 $scope.oldDeposit = result.deposit;
@@ -61,26 +106,26 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
                         "number": $scope.oldNumber,
                         "roomNum": $scope.oldRoomNum
                     }, function (result) {
+
+
                         //重置表单
                         $scope.currentUser = {
                             "sex": "男"
                         };
-                        $scope.myPrice = 100;
-                        $scope.myType = "普通单间";
-                        $scope.money = 0;
-                        $scope.deposit = 0;
+                        $scope.oldRoomNum = "";
+                        $scope.myPrice = "";
+                        $scope.myType = "";
+                        $scope.population = 0;
                         $("#intime").val("");
                         $("#outtime").val("");
-                        $("#roomType").val("");
-                        $("#population").val("1");
-                        $("#oldRoomNum").val("");
-                        $scope.days = 1;
+                        $scope.days = "";
+                        $scope.oldDeposit = 0;
 
                         if (result == true) {
-                            alert("操作成功！");
+                            $rootScope.showMes("退房成功");
                         }
                         else {
-                            alert("操作失败！");
+                            $rootScope.showMes("退房失败！");
                         }
                     });
                 }
@@ -106,7 +151,7 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
                         $scope.priceString = result2[0].price + "元/天";
                         $scope.price = result2[0].price ;
                         $("#roomType").val(result2[0].roomType );
-                        alert("该用户已经预定过房间，系统已为你补全信息！");
+                        $rootScope.showMes2("该用户已经预定过房间，系统已为你补全信息！");
                     });
 
 // ​​            $("#intime").val(result[0].intime);
@@ -189,6 +234,8 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
     }
     var today = new Date();
     $scope.today = $filter('date')(today, 'yyyy-MM-dd');
+
+
     // 提交表单--入住登记和房间预定的事件
     $scope.commit = function () {
         var roomNum = $("#roomNum").val();
@@ -198,11 +245,13 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
         var population = $("#population").val();
         console.log($scope.price * $scope.days * 1.5);
 
+        if (window.location.href.slice(23) == "dengjiruzhu") {
+            // 删除预定表
+            $.get("/deleteOrder", {"roomNum": roomNum}, function (result) {
+                console.log("删除结果" + result);
+            });
 
-        // 删除预定表
-        $.get("/deleteOrder",{"roomNum":roomNum},function (result) {
-            console.log("删除结果"+result);
-        });
+        }
         $.get("/checkIn",
             {
                 "roomNum": roomNum,
@@ -228,26 +277,29 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
                 $("#intime").val("");
                 $("#outtime").val("");
                 $("#roomType").val("");
-                $("#population").val("1");
-                $scope.days = 1;
+                $("#population").val("0");
+                $scope.days = 0;
 
 
                 if (result == true) {
-                    alert("操作成功！");
+                    $rootScope.showMes("操作成功！")
                 }
                 else {
-                    alert("操作失败！");
+                    $rootScope.showMes("操作失败！")
                 }
             });
-
     }
 
     //换房的事件
+
     $scope.changeRoom = function () {
+        // 初始化表单
+
+
         var roomNum = $("#roomNum").val();
         var number = $("#sfz").val();
-        /*var intime = $("#intime").val();
-        var outtime = $("#outtime").val();*/
+        var intime = $("#intime").val();
+        var outtime = $("#outtime").val();
         var population = $("#population").val();
 
         $.get("/deleteCheckIn", {
@@ -255,7 +307,7 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
             "roomNum": $scope.oldRoomNum
         }, function (result) {
             if (result) {
-                console.log("删除成功！");
+
                 $.get("/checkIn",
                     {
                         "roomNum": roomNum,
@@ -271,22 +323,21 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
                         $scope.currentUser = {
                             "sex": "男"
                         };
-                        $scope.price = 0;
+                        $scope.oldRoomNum = "";
+                        $scope.population = "";
                         $scope.priceString = "";
                         $scope.money = "";
-                        $scope.deposit = 0;
-                        $scope.enableRoomNum = [];
+                        $scope.requireM = "";
+
                         $("#intime").val("");
                         $("#outtime").val("");
-                        $("#roomType").val("");
-                        $("#population").val("1");
-                        $scope.days = 1;
+                        $scope.days = "";
 
                         if (result == true) {
-                            alert("操作成功！");
+                            $rootScope.showMes("换房成功！")
                         }
                         else {
-                            alert("操作失败！");
+                            $rootScope.showMes("换房成功！")
                         }
                     });
             }
@@ -377,9 +428,9 @@ myApp.controller("topBar", ["$scope", "$rootScope", "$timeout", function ($scope
                         if (result.result == true) {
                             $(".mask").css("display", "none");
                             $(".changePass").css("display", "none");
-                            alert("修改成功！");
+                            $rootScope.showMes("修改成功！");
                         } else {
-                            alert("更改失败！");
+                            $rootScope.showMes("修改失败！");
                         }
                     });
 

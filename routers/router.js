@@ -147,7 +147,7 @@ module.exports.checkIn = function (req, res) {
     var deposit = req.query.deposit;
     var type = req.query.type;
     console.log(type);
-    if(type == "房间预定表"){
+    if(type == "房间预定"){
         db.insert("INSERT INTO roomorder(roomNum,number,intime,outtime,population,deposit) VALUES('" + roomNum + "','" + number + "','" + intime + "','" + outtime + "','" + population + "','" + deposit + "')", function (result) {
             res.send(result);
         });

@@ -2,6 +2,35 @@
   width: 1170px !important;
 }*/
 
+//提示消息
+.mes,.mes2{
+
+  position: absolute;
+  width: 100px;
+  height: 40px;
+  left: 50%;
+  top: 50%;
+  margin-left: -50px;
+  margin-top: -20px;
+  text-align: center;
+  line-height: 40px;
+  color:white;
+  border-radius: 3px;
+  overflow: hidden;
+  background-color: #000;
+  transition: all .5s;
+  transform: scale(0);
+  opacity: 0;
+  display: none;
+}
+.mes2{
+  display: none;
+  width: 300px;
+  margin-left: -150px;
+  overflow: hidden;
+
+}
+
 /*
 顶部导航条
 */
@@ -222,6 +251,8 @@
     }
     td {
       padding-left: 5px;
+
+
       label {
         line-height: 50px;
         display: inline-block;
@@ -369,7 +400,7 @@
   margin-top: -151px;
   background-color: #f8f8f8;
   z-index: 99999999;
-  border: 5px solid #d71345;
+  border: 5px solid #00aa68;
   border-radius: 15px;
   overflow: hidden;
   img{
