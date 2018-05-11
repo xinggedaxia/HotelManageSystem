@@ -53,6 +53,10 @@ app.get("/employeeKaoQing",router.employeeKaoQing);
 app.get("/seachRoom2",router.seachRoom2);
 app.get("/searchRoomOrder",router.searchRoomOrder);
 app.get("/deleteOrder",router.deleteOrder);
+app.get("/getPrice",router.getPrice);
+app.get("/getRepair",router.getRepair);
+app.get("/addRepair",router.addRepair);
+app.get("/deleteRepair",router.deleteRepair);
 
 
 

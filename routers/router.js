@@ -4,15 +4,22 @@ var db = require("../models/db.js");
 var md5 = require("../models/md5.js");
 // formidable
 var formidable = require("formidable");
-// var pass = md5(md5("admin") + "hotel");
+
+ var pass1 = md5(md5("admin") + "hotel");
 
 // 不能同时执行查找和删除操作
 /*db.find("select * from manager",function (result) {
      console.log(result);
  });*/
-/*db.insert('INSERT INTO manager(用户名,密码,员工编号) VALUES(?,?,?)',['admin', pass,'2018001'],function (result) {
+/*
+db.insert("INSERT INTO manager(用户名,密码,员工编号) VALUES('admin2', '"+pass1+"','D002')",function (result) {
     console.log(result);
-});*/
+});
+db.insert("INSERT INTO manager(用户名,密码,员工编号) VALUES('admin3', '"+pass1+"','D003')",function (result) {
+    console.log(result);
+});
+*/
+
 // 注意,用户名后面的字符串不是数字要用单引号引起来
 /*db.remove("delete from manager where 用户名='菜鸟工具'",function (result) {
     console.log(result);
@@ -146,13 +153,18 @@ module.exports.checkIn = function (req, res) {
     var population = req.query.population;
     var deposit = req.query.deposit;
     var type = req.query.type;
-    console.log(type);
+
+
     if(type == "房间预定"){
+
         db.insert("INSERT INTO roomorder(roomNum,number,intime,outtime,population,deposit) VALUES('" + roomNum + "','" + number + "','" + intime + "','" + outtime + "','" + population + "','" + deposit + "')", function (result) {
             res.send(result);
         });
     }else{
-        db.insert("INSERT INTO checkin(roomNum,number,intime,outtime,population,deposit) VALUES('" + roomNum + "','" + number + "','" + intime + "','" + outtime + "','" + population + "','" + deposit + "')", function (result) {
+        var people1 = req.query.people1;
+        var people2 = req.query.people2;
+        var people3 = req.query.people3;
+        db.insert("INSERT INTO checkin(roomNum,number,intime,outtime,population,deposit,people1,people2,people3) VALUES('" + roomNum + "','" + number + "','" + intime + "','" + outtime + "','" + population + "','" + deposit + "','" + people1 + "','" + people2 + "','" + people3 + "')", function (result) {
             res.send(result);
         });
     }
@@ -301,18 +313,18 @@ module.exports.addRoom = function (req, res) {
 
 // 更新修理房态
 module.exports.updateRoom = function (req, res) {
-    var roomNum = req.query.roomNum;
-    var roomState = req.query.roomState;
-    if (roomState == 1) {
-        db.remove("delete from repair where roomNum = '" + roomNum + "'", function (result) {
-            res.send(result)
-        });
-    } else {
-        db.insert("insert into  repair(roomNum,roomState) value('" + roomNum + "','修理中')", function (result) {
-            res.send(result)
-        });
+    var roomType=req.query.roomType;
+    var roomNum=req.query.roomNum;
+    var price=req.query.price;
+    var mianJi=req.query.mianJi;
+    var zaoCan=req.query.zaoCan;
+    var louCen=req.query.louCen;
+    var chuangWei=req.query.chuangWei;
+    var chuangXin=req.query.chuangXin;
+    db.update("update roominfo set roomType='"+roomType +"',price='"+price +"',mianJi='"+ mianJi+"',zaoCan='"+ zaoCan+"',chuangWei='"+chuangWei +"',chuangXin='"+chuangXin +"' ,louCen='"+louCen +"' where roomNum='"+roomNum+"'",function (result) {
+        res.send(result);
+    });
 
-    }
 }
 
 // 删除原有预定表
@@ -452,7 +464,6 @@ module.exports.employeeKaoQing = function (req,res) {
 // 获取退订日期为今日的房间
 module.exports.seachRoom2 = function (req,res) {
     var outtime = req.query.outtime;
-    console.log(outtime);
     db.find("select * from checkin where outtime = '"+outtime+"'",function (result) {
         res.send(result);
     });
@@ -465,5 +476,46 @@ module.exports.searchRoomOrder = function (req,res) {
     db.find("select * from roomorder where number = '" + number + "'", function (result) {
         res.json(result);
 
+    });
+}
+
+// 根据房间号获取一个房间的信息
+
+module.exports.getPrice = function (req,res) {
+    var num = req.query.roomNum;
+    db.find("select * from roominfo where roomNum = '"+num+"' ",function (result) {
+        res.send(result);
+    });
+}
+
+// 根据房间号获取维修信息
+module.exports.getRepair = function (req,res) {
+    var roomNum = req.query.roomNum;
+    db.find("select * from repair where roomNum = '"+roomNum+"'",function (result) {
+        res.send(result);
+    })
+}
+
+// 增加一个维修房间
+module.exports.addRepair = function (req,res) {
+    var roomNum = req.query.roomNum;
+    var startTime = req.query.startTime;
+    var principal = req.query.principal;
+    var thing = req.query.thing;
+    var reason = req.query.reason;
+
+    db.insert("INSERT INTO repair(roomNum,startTime,principal,thing,reason) VALUES('"+roomNum+"','"+startTime+"','"+principal+"','"+thing+"','"+reason+"')",function (result) {
+        db.insert("INSERT INTO maintenance_record(roomNum,startTime,principal,thing,reason) VALUES('"+roomNum+"','"+startTime+"','"+principal+"','"+thing+"','"+reason+"')",function (result) {
+            res.send(result);
+        });
+    });
+
+}
+
+// 删除维修房间
+module.exports.deleteRepair = function (req,res) {
+    var roomNum = req.query.roomNum;
+    db.remove("delete from repair where roomNum = '"+ roomNum+"'",function (result) {
+        res.send(result);
     });
 }

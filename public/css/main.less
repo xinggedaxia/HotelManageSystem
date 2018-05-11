@@ -3,7 +3,7 @@
 }*/
 
 //提示消息
-.mes,.mes2{
+.mes, .mes2 {
 
   position: absolute;
   width: 100px;
@@ -14,7 +14,7 @@
   margin-top: -20px;
   text-align: center;
   line-height: 40px;
-  color:white;
+  color: white;
   border-radius: 3px;
   overflow: hidden;
   background-color: #000;
@@ -22,8 +22,10 @@
   transform: scale(0);
   opacity: 0;
   display: none;
+  z-index: 9;
 }
-.mes2{
+
+.mes2 {
   display: none;
   width: 300px;
   margin-left: -150px;
@@ -35,12 +37,12 @@
 顶部导航条
 */
 
-  .navbar{
-    background-color: #00aa68;
-    a{
-      color:white !important;
-    }
+.navbar {
+  background-color: #00aa68;
+  a {
+    color: white !important;
   }
+}
 
 #readCard {
   height: 30px;
@@ -89,6 +91,7 @@
   border: 3px solid gray;
   border-radius: 10px;
   position: relative;
+
   .state {
     height: 40px;
     ul {
@@ -125,6 +128,10 @@
 //首页房态显示
 .allroom {
   overflow: hidden;
+  position: relative;
+  background: url("/images/load.gif") no-repeat center center;
+  //background-size: 100% 100%;
+
   .rooms {
     overflow: hidden;
     margin-bottom: 5px;
@@ -146,6 +153,7 @@
       margin-bottom: 0px;
       li {
         float: left;
+        position: relative;
         width: 60px;
         height: 60px;
         line-height: 60px;
@@ -156,6 +164,34 @@
         margin-bottom: 10px;
         cursor: pointer;
         background-color: #419641;
+        .tools {
+          position: absolute;
+          left: 0;
+          top: 0;
+          display: none;
+          transition: all 1s;
+          transform: rotateZ(360deg);
+          .showInfo, .setRepair {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            text-align: center;
+            line-height: 40px;
+            opacity: 0;
+          }
+          .showInfo {
+            left: 12px;
+            top: 10px;
+            background-color: pink;
+          }
+          .setRepair {
+            left: 12px;
+            top: 10px;
+            background-color: #5c26dd;
+          }
+        }
 
       }
       .free {
@@ -174,22 +210,148 @@
   }
 }
 
-//房间信息框
-#roomInfo{
-  position: absolute;
-  left:0;
+//房间详细信息
+#showInfo, #setRepair,.searchRoom {
+  position: fixed;
+  display: none;
+  left: 50%;
+  top: 50%;
+  margin-left: -250px;
+  margin-top: -150px;
+  width: 500px;
+  height: 320px;
+  z-index: 999999;
+  background-color: #fff;
+  box-shadow: 0 0 10px #000;
+  .d1, .d2, .d3, .d4 {
+    position: absolute;
+  }
+  .d1 {
+    left: 116px;
+    top: 123px;
+  }
+  .d2 {
+    left: 353px;
+    top: 123px;
+  }
+  .d3 {
+    left: 94px;
+    top: 223px;
+  }
+  .d4 {
+    left: 346px;
+    top: 223px;
+  }
+  h2 {
+    font-weight: normal;
+    text-align: left;
+    border-bottom: 1px solid gray;
+    margin: 0 0 20px 0;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 10px;
+    font-size: 20px;
+  }
+  div {
+    height: 30px;
+    margin-bottom: 20px;
+    .item_l {
+      float: left;
+      width: 248px;
+      height: 100%;
+
+    }
+    .item_r {
+      float: right;
+      width: 248px;
+      height: 100%;
+
+    }
+    .attrName {
+      display: inline-block;
+      width: 70px;
+      text-align: right;
+      margin-right: 10px;
+      font-weight: 600;
+    }
+    input, select {
+      width: 155px;
+      text-align: left;
+    }
+    .spe {
+      margin-left: -5px;
+    }
+    .xiugai {
+      position: absolute;
+      bottom: 21px;
+      cursor: pointer;
+      width: 60px;
+      height: 30px;
+      line-height: 30px;
+      border-radius: 5px;
+      text-align: center;
+      color: white;
+      background-color: #419641;
+      right: 108px;
+    }
+    .cancel {
+      position: absolute;
+      right: 14px;
+      bottom: 21px;
+      cursor: pointer;
+      width: 60px;
+      height: 30px;
+      line-height: 30px;
+      border-radius: 5px;
+      text-align: center;
+      color: black;
+      background-color: gray;
+    }
+  }
+}
+
+//报修
+#setRepair {
+  //display: block;
+  textarea {
+    position: absolute;
+    left: 80px;
+    top: 173px;
+    width: 408px;
+  }
+  #xiugai3{
+    display: none;
+  }
+}
+
+.mask3 {
+  display: none;
+  position: fixed;
+  left: 0;
   top: 0;
-  background-color: pink ;
-  color : white;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.5;
+}
+
+//房间信息框
+#roomInfo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: pink;
+  color: white;
   border-radius: 10px;
   //overflow: hidden;
-  table{
+  table {
     border-radius: 10px;
     overflow: hidden;
   }
-  .sanjiao{
+  .sanjiao {
     position: absolute;
-    top:90px;
+    top: 90px;
     left: -40px;
     border: 20px solid transparent;
     border-bottom: 20px solid #419641;
@@ -197,7 +359,6 @@
 
   }
 }
-
 
 .info {
   height: 500px;
@@ -235,8 +396,6 @@
   }
 }
 
-
-
 .checkin {
 
   box-shadow: 6px 6px 6px;
@@ -251,7 +410,6 @@
     }
     td {
       padding-left: 5px;
-
 
       label {
         line-height: 50px;
@@ -285,6 +443,7 @@
   background-color: black;
   opacity: 0.5;
 }
+
 //二号遮罩
 .mask2 {
   display: none;
@@ -389,7 +548,7 @@
 读身份证显示界面
 */
 
-.cardInfo{
+.cardInfo {
   display: none;
   position: fixed;
   width: 752px;
@@ -403,12 +562,12 @@
   border: 5px solid #00aa68;
   border-radius: 15px;
   overflow: hidden;
-  img{
+  img {
     width: 150px;
     height: 200px;
   }
-  .attr{
-    color : #5942df;
+  .attr {
+    color: #5942df;
     border-color: black;
   }
   .close2 {
@@ -425,7 +584,7 @@
       transform: rotateZ(180deg);
     }
   }
-  .write{
+  .write {
     display: inline-block;
     margin: 0 auto;
     width: 60px;
@@ -439,69 +598,71 @@
 房间管理
 */
 
-
 //房价
- tr.title2{
+tr.title2 {
   background-color: #00aa68;
 
-  td{
+  td {
     color: #fff;
 
   }
 }
-#search{
-  td{
+
+#search {
+  td {
     position: relative;
   }
-  .used{
+  .used {
     display: none;
     position: absolute;
-    right:4px;
+    right: 4px;
     top: 8px;
     font-size: 20px;
-    color:red;
+    color: red;
 
   }
 }
-#roomPrice input{
+
+#roomPrice input {
   display: inline-block;
   width: 50px;
 
-
-
 }
-.caozuo{
+
+.caozuo {
   font-weight: bold;
   cursor: pointer;
-  &:hover{
+  &:hover {
     background-color: lightgray;
   }
 }
-#box{
+
+#box {
   height: 274px;
   overflow: hidden;
 }
-#roomManage{
-  margin-top: 30px;
-  .roomList2{
 
-    &:nth-child(2n){
+#roomManage {
+  margin-top: 30px;
+  .roomList2 {
+
+    &:nth-child(2n) {
       background-color: #f6f5ec;
     }
   }
-  .roomstate{
-    input{
+  .roomstate {
+    input {
       margin-right: 30px;
     }
   }
 
-  #search{
+  #search {
     border: 4px solid purple;
     font-weight: bold;
-    input{
+    input {
       margin-right: 30px;
     }
-    #roomNum{
+    #roomNum {
       display: block;
       margin: 0 auto;
       width: 50%;
@@ -509,12 +670,11 @@
       border: none;
       text-align: center;
     }
-    #price{
+    #price {
       display: inline-block;
       width: 40px;
       margin-right: 0px;
     }
-
 
   }
 }
@@ -523,97 +683,191 @@
 员工管理
 */
 
-.box2{
+.box2 {
   height: 114px;
   overflow: hidden;
 }
 
-#employeeInfo{
-  .emInfo:nth-child(2n){
+#employeeInfo {
+  .emInfo:nth-child(2n) {
     background-color: #f6f5ec;
   }
   .emInfo:nth-child(2n) input {
     background-color: #f6f5ec;
   }
 
-  .titleEm{
-    color : white;
+  .titleEm {
+    color: white;
   }
-  input{
+  input {
     display: inline-block;
     width: 123px;
     height: 100%;
     border: none;
     text-align: center;
-    &:focus{
+    &:focus {
       background-color: #65c294 !important;
     }
 
   }
-  .title3{
+  .title3 {
     border: 4px solid purple;
     overflow: hidden;
-    td{
+    td {
       position: relative;
     }
-    .used{
+    .used {
       display: none;
       position: absolute;
-      right:4px;
+      right: 4px;
       top: 4px;
       font-size: 20px;
-      color:red;
+      color: red;
 
     }
   }
 }
 
 //员工考勤
-.title4{
-  color:white;
+.title4 {
+  color: white;
 }
-.inputInfo{
+
+.inputInfo {
   border: 4px solid purple;
 }
-.inputInfo input{
+
+.inputInfo input {
   width: 100%;
   height: 100%;
   text-align: center;
   text-align: center;
   border: none;
-  &:focus{
+  &:focus {
     background-color: #65c294 !important;
   }
 }
-.kqContent:nth-child(2n){
+
+.kqContent:nth-child(2n) {
   background-color: #f6f5ec;
 }
-#search2{
+
+#search2 {
   cursor: pointer;
   font-weight: bold;
-  &:hover{
+  &:hover {
     background-color: lightgray;
   }
 }
-.box3{
+
+.box3 {
   height: auto;
   overflow: hidden;
 }
-.choose{
+
+.choose {
   cursor: pointer;
-  &:hover{
+  &:hover {
     background-color: gray;
   }
-   span{
+  span {
     display: none;
   }
 
 }
+
 .selected {
-  span{
+  span {
     display: block;
   }
 }
-#demo{
+
+#demo {
   background-color: blue;
+}
+
+#readOther{
+  display: none;
+  position: absolute;
+  width: 700px;
+  height: 250px;
+  background-color: #00aa68;
+  border: 3px solid black;
+  left: 220px;
+  top: 100px;
+  z-index: 2;
+  h1{
+    //font-weight: normal;
+    font-size: 20px;
+    border-bottom: 1px solid black;
+    line-height: 40px;
+    margin-top: 0px;
+    text-align: center;
+    //color:white;
+  }
+
+  ul{
+    list-style: none;
+    width: 100%;
+    li{
+      float: left;
+      margin-right: 20px;
+      width: 28%;
+      height: 160px;
+      border: 1px solid black;
+      input{
+        width: 180px;
+        background-color: white;
+      }
+      p{
+        line-height: 30px;
+        margin-bottom: 0px ;
+        font-weight: 600;
+      }
+      .cus{
+        text-align: center;
+        border-bottom: 1px solid black;
+      }
+
+    }
+  }
+  .confirm{
+    position: absolute;
+    cursor: pointer;
+    bottom: 3px;
+    left:321px;
+    width: 60px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background-color: #48dd72;
+    color:white;
+  }
+}
+.mask5{
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.5;
+}
+.sel{
+  display: inline-block;
+  width: 80px;
+  background-color: #419641;
+  color:white;
+  text-align: center;
+  cursor: pointer;
+  &:hover{
+    background-color: #2e782e;
+  }
+}
+
+.searchRoom{
+  //display: block;
+  height: 265px;
 }

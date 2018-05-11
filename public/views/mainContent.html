@@ -1,31 +1,4 @@
 <div class="room col-lg-8">
- <!--  <div id="roomInfo">
-       <div class="sanjiao"></div>
-       <table border="1" >
-           <tr>
-               <td height="36" colspan="2" align="center"><strong>入住信息</strong></td>
-           </tr>
-           <tr>
-               <td width="76" height="36" align="center"> 入住时间：</td>
-               <td width="112" height="36" align="center">2018-05-22</td>
-           </tr>
-           <tr>
-               <td width="76" height="36" align="center">退房时间：</td>
-               <td width="112" height="36" align="center">2018-05-22</td>
-           </tr>
-           <tr>
-               <td height="36" colspan="2" align="center"><strong>预定信息</strong></td>
-           </tr>
-           <tr>
-               <td width="76" height="36" align="center">入住日期：</td>
-               <td width="112" height="36" align="center">2018-05-22</td>
-           </tr>
-           <tr>
-               <td width="76" height="36" align="center">退订日期：</td>
-               <td width="112" height="36" align="center">2018-05-22</td>
-           </tr>
-       </table>
-   </div>-->
     <div class="state">
         <ul>
             <li><span></span>
@@ -42,41 +15,73 @@
         <div class="rooms">
             <span class="roomType">普通单间</span>
             <ul>
-                <li ng-repeat="x in roomInfo" ng-if="x.roomType == '普通单间'"  id="{{x.roomNum}}">{{x.roomNum}}</li>
+                <li ng-repeat="x in roomInfo" ng-if="x.roomType == '普通单间'" id="{{x.roomNum}}">{{x.roomNum}}
+                    <div class="tools">
+                        <span class="showInfo">信息</span>
+                        <span class="setRepair">维修</span>
+                    </div>
+                </li>
             </ul>
         </div>
         <div class="rooms">
             <span class="roomType">普通双间</span>
             <ul>
-                <li ng-repeat="x in roomInfo" ng-if="x.roomType == '普通双间'" id="{{x.roomNum}}" >{{x.roomNum}}</li>
+                <li ng-repeat="x in roomInfo" ng-if="x.roomType == '普通双间'" id="{{x.roomNum}}">{{x.roomNum}}
+                    <div class="tools">
+                        <span class="showInfo">信息</span>
+                        <span class="setRepair">维修</span>
+                    </div>
+                </li>
             </ul>
         </div>
         <div class="rooms">
             <span class="roomType">豪华单间</span>
             <ul>
-                <li ng-repeat="x in roomInfo" ng-if="x.roomType == '豪华单间'"  id="{{x.roomNum}}">{{x.roomNum}} </li>
+                <li ng-repeat="x in roomInfo" ng-if="x.roomType == '豪华单间'" id="{{x.roomNum}}">{{x.roomNum}}
+                    <div class="tools">
+                        <span class="showInfo">信息</span>
+                        <span class="setRepair">维修</span>
+                    </div>
+                </li>
             </ul>
         </div>
 
         <div class="rooms">
             <span class="roomType">豪华双间</span>
             <ul>
-                <li ng-repeat="x in roomInfo" ng-if="x.roomType == '豪华双间'" ng-class="x.state" id="{{x.roomNum}}">{{x.roomNum}}</li>
+                <li ng-repeat="x in roomInfo" ng-if="x.roomType == '豪华双间'" ng-class="x.state" id="{{x.roomNum}}">
+                    {{x.roomNum}}
+                    <div class="tools">
+                        <span class="showInfo">信息</span>
+                        <span class="setRepair">维修</span>
+                    </div>
+                </li>
 
             </ul>
         </div>
         <div class="rooms">
             <span class="roomType">贵宾套房</span>
             <ul>
-                <li ng-repeat="x in roomInfo" ng-class="x.state" ng-if="x.roomType == '贵宾套房'" id="{{x.roomNum}}">{{x.roomNum}}</li>
+                <li ng-repeat="x in roomInfo" ng-class="x.state" ng-if="x.roomType == '贵宾套房'" id="{{x.roomNum}}">
+                    {{x.roomNum}}
+                    <div class="tools">
+                        <span class="showInfo">信息</span>
+                        <span class="setRepair">维修</span>
+                    </div>
+                </li>
 
             </ul>
         </div>
         <div class="rooms">
             <span class="roomType">总统套房</span>
             <ul>
-                <li ng-repeat="x in roomInfo"  ng-class="x.state" ng-if="x.roomType == '总统套房'" id="{{x.roomNum}}">{{x.roomNum}}</li>
-
+                <li ng-repeat="x in roomInfo" ng-class="x.state" ng-if="x.roomType == '总统套房'" id="{{x.roomNum}}">
+                    {{x.roomNum}}
+                    <div class="tools">
+                        <span class="showInfo">信息</span>
+                        <span class="setRepair">维修</span>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
@@ -90,3 +95,104 @@
     </div>
     <div class="currentTime">{{time}}</div>
 </div>
+<div id="showInfo">
+    <h2>房间信息</h2>
+    <span class="d1">元/天</span>
+    <span class="d2">平方米</span>
+    <span class="d3">个</span>
+    <span class="d4">楼</span>
+    <div>
+        <span class="item_l">
+            <span class="attrName">房间号：</span><input type="text" ng-value="_roomNum" disabled id="_roomNum">
+        </span>
+        <span  class="item_r">
+           <span class="attrName"> 房间类型：</span>
+        <select id="roomType" class="spe" ng-value="_roomType">
+        <option value="普通单间">普通单间</option>
+        <option value="普通双间">普通双间</option>
+        <option value="豪华单间">豪华单间</option>
+        <option value="豪华双间">豪华双间</option>
+        <option value="贵宾套房">贵宾套房</option>
+        <option value="总统套房">总统套房</option>
+    </select>
+        </span>
+    </div>
+
+
+    <div>
+        <span  class="item_l"> <span class="attrName">价格：</span><input type="text" ng-value="_price" id="_price"></span>
+        <span class="item_r">
+            <span class="attrName">面积：</span><input type="text" ng-value="mianJi" id="mianJi">
+       </span>
+    </div>
+    <div>
+       <span  class="item_l">
+           <span class="attrName">早餐：</span>
+           <select  class="spe" ng-value="zaoCan" id="zaoCan">
+        <option value="0">不提供</option>
+        <option value="1">提供</option>
+
+        </select>
+       </span>
+        <span class="item_r">
+            <span class="attrName">床型：</span><select  ng-value="chuangXin" id="chuangXin">
+        <option value="中床">中床</option>
+        <option value="大床">大床</option>
+
+    </select>
+        </span>
+    </div>
+    <div>
+        <span  class="item_l"><span class="attrName"> 床位：</span><input type="text" ng-value="chuangWei" id="chuangWei"></span>
+        <span  class="item_r"><span class="attrName">楼层：</span><input type="text" ng-value="louCen" id="louCen"></span>
+    </div>
+    <div>
+
+        <span class="cancel" id="cancel">取消</span>
+        <span class="xiugai" id="xiugai">修改</span>
+    </div>
+</div>
+
+<!--房间维修报修-->
+
+<div id="setRepair">
+    <h2>维修信息</h2>
+    <div>
+        <span class="item_l">
+            <span class="attrName">房间号：</span><input type="text" ng-value="roomNum2" disabled id="roomNum2">
+        </span>
+        <span  class="item_r spe">
+           <span class="attrName"> 开始日期：</span>
+        <input type="date" class="spe" ng-value="startTime" id="startTime">
+        </span>
+    </div>
+
+
+    <div>
+        <span  class="item_l"> <span class="attrName">负责人：</span><select  ng-value="principal2" id="principal2">
+        <option value="李玟康">李玟康</option>
+        <option value="赵国">赵国</option>
+        <option value="吴富贵">吴富贵</option>
+
+        </select></span>
+        <span class="item_r">
+            <span class="attrName">维修物品：</span><input type="text" ng-value="thing" id="thing" placeholder="请输入维修物品名称">
+       </span>
+    </div>
+    <div>
+       <span  class="item_l">
+           <span class="attrName">描述：</span>
+
+       </span>
+        <textarea rows="3" cols="20" ng-value="reason" placeholder="请简单描述下问题" id="reason"></textarea>
+
+
+    </div>
+
+    <div>
+        <span class="xiugai" id="xiugai2">提交</span>
+        <span class="xiugai" id="xiugai3">正常</span>
+        <span class="cancel" id="cancel2">取消</span>
+    </div>
+</div>
+<div class="mask3"></div>

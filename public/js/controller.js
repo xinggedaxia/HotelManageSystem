@@ -15,30 +15,30 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
 
     //显示操作结果提示
     $rootScope.showMes = function (info) {
-        $(".mes").css("display","block");
-       setTimeout(function () {
-           $(".mes").css({"transform":"scale(1)","opacity":"1"});
-           $(".mes").text(info);
-           setTimeout(function () {
-               $(".mes").css({"transform":"scale(0)","opacity":"0"});
-               setTimeout(function () {
-                   $(".mes").css("display","none");
-               },500)
-           },1500)
-       },100)
+        $(".mes").css("display", "block");
+        setTimeout(function () {
+            $(".mes").css({"transform": "scale(1)", "opacity": "1"});
+            $(".mes").text(info);
+            setTimeout(function () {
+                $(".mes").css({"transform": "scale(0)", "opacity": "0"});
+                setTimeout(function () {
+                    $(".mes").css("display", "none");
+                }, 500)
+            }, 1500)
+        }, 100)
     }
     $rootScope.showMes2 = function (info) {
-        $(".mes2").css("display","block");
+        $(".mes2").css("display", "block");
         setTimeout(function () {
-            $(".mes2").css({"transform":"scale(1)","opacity":"1"});
+            $(".mes2").css({"transform": "scale(1)", "opacity": "1"});
             $(".mes2").text(info);
             setTimeout(function () {
-                $(".mes2").css({"transform":"scale(0)","opacity":"0"});
+                $(".mes2").css({"transform": "scale(0)", "opacity": "0"});
                 setTimeout(function () {
-                    $(".mes2").css("display","none");
-                },500)
-            },1500)
-        },100)
+                    $(".mes2").css("display", "none");
+                }, 500)
+            }, 1500)
+        }, 100)
     }
 
 
@@ -49,10 +49,10 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
     var xuhao = ["①", "②", "③", "④", "⑤", "⑥"];
     $.get("/seachRoom2", {"outtime": date}, function (res) {
         $scope.info = [];
-        if(res.length == 0){
+        if (res.length == 0) {
             var txt = "暂无消息！";
             $scope.info.push(txt);
-        }else{
+        } else {
 
             if (today.getHours() < 12) {
                 for (var i = 0, len = res.length; i < len; i++) {
@@ -69,102 +69,159 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
 
     });
 
+    //定义一个变量用于判断当前刷身份证的目的1代表入住人，0代表随行
+    $scope.user = 1;
+    $scope.other = [];
 
     $scope.oldDeposit = 0;
 
     // 获取身份证读取模块传过来了身份证信息
 
+
     $scope.$on("toParent", function (event, data) {
-        $scope.currentUser = data;
 
-        // 判断当前页面位置
-        if (window.location.href.slice(23) == "huanfang" || window.location.href.slice(23) == "tuifang") {
+        if ($scope.user == 1) {
+            $scope.currentUser = data;
+            // 判断当前页面位置
+            if (window.location.href.slice(23) == "huanfang" || window.location.href.slice(23) == "tuifang") {
 
 
 
 
-            //查询当前用户的入住信息
-            $.get("/searchCheckIn", {"number": $scope.currentUser.number}, function (result) {
-                var result = result[0];
-                if(!result){
-                    $rootScope.showMes2("暂无该用户的入住信息！");
-                    return;
-                }
-                $scope.oldRoomNum = result.roomNum;
-                $scope.oldNumber = result.number;
-                $scope.oldDeposit = result.deposit;
-                $scope.population = result.population;
-                console.log($scope.oldDeposit * 0.5);
+                //查询当前用户的入住信息
+                $.get("/searchCheckIn", {"number": $scope.currentUser.number}, function (result) {
 
-                $.get("/findOneRoom", {"roomNum": $scope.oldRoomNum}, function (result) {
-                    console.log(result[0]);
-                    $scope.myPrice = result[0].price;
-                    $scope.myType = result[0].roomType;
+                    if (result.length == 0) {
+                        $rootScope.showMes2("暂无该用户的入住信息！");
+                        return;
+                    }
+                    var result = result[0];
+                    $scope.oldRoomNum = result.roomNum;
+                    $scope.oldNumber = result.number;
+                    $scope.oldDeposit = result.deposit;
+                    $scope.population = result.population;
+
+                    $.get("/findOneRoom", {"roomNum": $scope.oldRoomNum}, function (result) {
+                        console.log(result[0]);
+                        $scope.myPrice = result[0].price;
+                        $scope.myType = result[0].roomType;
+                    });
+                    $scope.tuifang = function () {
+                        $.get("/deleteCheckIn", {
+                            "number": $scope.oldNumber,
+                            "roomNum": $scope.oldRoomNum
+                        }, function (result) {
+
+
+                            //重置表单
+                            $scope.currentUser = {
+                                "sex": "男"
+                            };
+                            $scope.oldRoomNum = "";
+                            $scope.myPrice = "";
+                            $scope.myType = "";
+                            $scope.population = 0;
+                            $("#intime").val("");
+                            $("#outtime").val("");
+                            $scope.days = "";
+                            $scope.oldDeposit = 0;
+
+                            if (result == true) {
+                                $rootScope.showMes("退房成功");
+                            }
+                            else {
+                                $rootScope.showMes("退房失败！");
+                            }
+                        });
+                    }
+                    $("#intime").val($filter('date')(result.intime, 'yyyy-MM-dd'));
+
+                    $("#outtime").val($filter('date')(result.outtime, 'yyyy-MM-dd'));
+                    // $("#roomType").val("");
+                    $("#population").val(result.population);
+
+                    $scope.days = $scope.datedifference(result.intime, result.outtime);
                 });
-                $scope.tuifang = function () {
-                    $.get("/deleteCheckIn", {
-                        "number": $scope.oldNumber,
-                        "roomNum": $scope.oldRoomNum
-                    }, function (result) {
+            }
+            else if (window.location.href.slice(23) == "dengjiruzhu") {
+                $.get("/searchRoomOrder", {"number": $scope.currentUser.number}, function (result) {
+                    if (result.length != 0) {
+                        // console.log(result);
+                        $scope.enableRoomNum = [result[0].roomNum];
+                        var dep = result[0].deposit
+                        $scope.deposit = dep + "元";
+                        $("#totalMonney").val(dep * 2 / 3 + "元");
 
-
-                        //重置表单
-                        $scope.currentUser = {
-                            "sex": "男"
-                        };
-                        $scope.oldRoomNum = "";
-                        $scope.myPrice = "";
-                        $scope.myType = "";
-                        $scope.population = 0;
-                        $("#intime").val("");
-                        $("#outtime").val("");
-                        $scope.days = "";
-                        $scope.oldDeposit = 0;
-
-                        if (result == true) {
-                            $rootScope.showMes("退房成功");
-                        }
-                        else {
-                            $rootScope.showMes("退房失败！");
-                        }
-                    });
-                }
-                $("#intime").val($filter('date')(result.intime, 'yyyy-MM-dd'));
-
-                $("#outtime").val($filter('date')(result.outtime, 'yyyy-MM-dd'));
-                // $("#roomType").val("");
-                $("#population").val(result.population);
-
-                $scope.days = $scope.datedifference(result.intime, result.outtime);
-            });
-        }
-        else if (window.location.href.slice(23) == "dengjiruzhu") {
-            $.get("/searchRoomOrder", {"number": $scope.currentUser.number}, function (result) {
-                if (result.length != 0) {
-
-                     $scope.enableRoomNum = [result[0].roomNum];
-                    $("#roomNum").val(result[0].roomNum);
-                    var dep = result[0].deposit
-                    $scope.deposit = dep + "元";
-                    $("#totalMonney").val(dep*2/3 + "元");
-                    $.get("/findOneRoom",{"roomNum":result[0].roomNum},function (result2) {
-                        $scope.priceString = result2[0].price + "元/天";
-                        $scope.price = result2[0].price ;
-                        $("#roomType").val(result2[0].roomType );
-                        $rootScope.showMes2("该用户已经预定过房间，系统已为你补全信息！");
-                    });
+                        //获取单个房间的信息，主要是房价
+                        $.get("/findOneRoom", {"roomNum": result[0].roomNum}, function (result2) {
+                            $scope.priceString = result2[0].price + "元/天";
+                            $scope.price = result2[0].price;
+                            $("#roomType").val(result2[0].roomType);
+                            $("#roomNum").html("<option>" + result[0].roomNum + "</option>");
+                            $rootScope.showMes2("该用户已经预定过房间，系统已为你补全信息！");
+                            setTimeout(function () {
+                                $scope.readCard();
+                            }, 3000);
+                        });
 
 // ​​            $("#intime").val(result[0].intime);
-                    $("#population").val(result[0].population);
-                    $("#intime").val($filter('date')(result[0].intime,"yyyy-MM-dd"));
-                    $("#outtime").val($filter('date')(result[0].outtime,"yyyy-MM-dd"));
-                    $scope.getDays();
-                }
-            });
+                        $("#population").val(result[0].population);
+                        $("#intime").val($filter('date')(result[0].intime, "yyyy-MM-dd"));
+                        $("#outtime").val($filter('date')(result[0].outtime, "yyyy-MM-dd"));
+                        $scope.getDays();
+                    }
+                });
+            }
         }
+        else {
+            $scope.other.push({"name": data.name, "number": data.number});
+        }
+
 
     });
 
+
+    // 房间高级筛选
+    $scope.show_search = function () {
+        $(".searchRoom").css("display","block");
+        $(".mask").css("display","block");
+    }
+    $scope.close_s = function () {
+        $(".searchRoom").css("display","none");
+        $(".mask").css("display","none");
+    }
+    $scope.searchR = function () {
+        $.get("/searchRoom",
+            {"intime": $scope.intime, "outtime": $scope.outtime},
+            function (result) {
+                
+            });
+
+
+        $(".searchRoom").css("display","none");
+        $(".mask").css("display","none");
+    }
+
+
+    // 读取其他顾客身份证
+    $scope.readCard = function () {
+
+
+        $scope.user = 0;
+        $scope.other = [];
+        var population = parseInt($("#population").val());
+        if (population > 1) {
+            $(".mask5").css("display","block");
+            var str = "请再刷" + (population - 1) + "人的身份证！";
+            $rootScope.showMes2(str)
+            $("#readOther").css("display", "block");
+        }
+    }
+    $scope.closeV = function () {
+        $("#readOther").css("display", "none");
+        $(".mask5").css("display","none");
+        $scope.user = 1;
+    }
 
     //计算时间差
     $scope.datedifference = function (sDate1, sDate2) {    //sDate1和sDate2是2006-12-18格式
@@ -184,14 +241,35 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
         $scope.outtime = $("#outtime").val();
         $scope.days = $scope.datedifference($scope.intime, $scope.outtime);
     }
+
+
+    // 根据房间号查询价格
+    $scope.getPrice2 = function () {
+        var num = $("#roomNum").val();
+        $.get("/getPrice", {"roomNum": num}, function (res) {
+            if (res.length == 0) {
+                return;
+            }
+            $scope.price = res[0].price;
+            // console.log($scope.price);
+            $scope.priceString = $scope.price + "元/天";
+            $scope.money = $scope.price * $scope.days + "元";
+            $scope.deposit = $scope.price * $scope.days * 1.5 + "元";
+
+            //计算退补押金金额
+            var num = $scope.price * $scope.days * 1.5 - $scope.oldDeposit;
+            $scope.requireM = (num) >= 0 ? "补交押金" + num + "元" : "退还押金" + (-num) + "元";
+        });
+    }
+    //根据条件显示空房和价格
     $scope.getRoom = function () {
 
         // 获取入住和退房时间和房间类型
 
         var roomtype = $("#roomType").val();
 
-        $scope.money = 1;
-        $scope.deposit = 1;
+        /*$scope.money = 1;
+        $scope.deposit = 1;*/
         $scope.enableRoomNum = [];
         // 入住登记
         $scope.enable = [];
@@ -207,19 +285,7 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
                     unableNum.push(result[i].roomNum);
                 }
                 $.get("/roomInfo2", {"roomType": roomtype}, function (result2) {
-                    /*console.log("----------------------------");
-                    console.log(result2);*/
-                    //获取房价
-                    // console.log($scope.days);
-                    $scope.price = result2[0].price;
-                    // console.log($scope.price);
-                    $scope.priceString = $scope.price + "元/天";
-                    $scope.money = $scope.price * $scope.days + "元";
-                    $scope.deposit = $scope.price * $scope.days * 1.5 + "元";
 
-                    //计算退补押金金额
-                    var num = $scope.price * $scope.days * 1.5 - $scope.oldDeposit;
-                    $scope.requireM = (num) >= 0 ? "补交押金" + num + "元" : "退还押金" + (-num) + "元";
 
                     for (var i = 0, len = result2.length; i < len; i++) {
                         allRoomNum.push(result2[i].roomNum);
@@ -243,7 +309,6 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
         var intime = $("#intime").val();
         var outtime = $("#outtime").val();
         var population = $("#population").val();
-        console.log($scope.price * $scope.days * 1.5);
 
         if (window.location.href.slice(23) == "dengjiruzhu") {
             // 删除预定表
@@ -260,7 +325,10 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
                 "outtime": outtime,
                 "population": population,
                 "deposit": $scope.price * $scope.days * 1.5,
-                "type": $("#type").text()
+                "type": $("#type").text(),
+                "people1": $scope.other[0] == undefined ? "" : $scope.other[0].number,
+                "people2": $scope.other[1] == undefined ? "" : $scope.other[1].number,
+                "people3": $scope.other[2] == undefined ? "" : $scope.other[2].number,
             },
             function (result) {
 
@@ -280,6 +348,8 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
                 $("#population").val("0");
                 $scope.days = 0;
 
+                // 让other数组清空
+                $scope.other = [];
 
                 if (result == true) {
                     $rootScope.showMes("操作成功！")
@@ -488,19 +558,156 @@ myApp.controller("topBar", ["$scope", "$rootScope", "$timeout", function ($scope
 房间信息控制类
 */
 
-myApp.controller("mainContent", ["$scope", "$filter", function ($scope, $filter) {
+myApp.controller("mainContent", ["$scope", "$filter", "$rootScope", function ($scope, $filter, $rootScope) {
 
     // 获取今日日期
     var today = new Date();
     today = $filter('date')(today, 'yyyy-MM-dd');
 
     $scope.data = [];
+
+
     // 请求房间数据
     $.get("/roomInfo", {"today": today}, function (result) {
         $scope.roomInfo = result.allRoom;
         $scope.data = result.allRoom;
         //判断改房间的状态
         setTimeout(function () {
+            //初始化小菜单点击事件
+            $(".rooms li").click(function (e) {
+
+                $(this).css("z-index", "99");
+                $(this).siblings().css({"z-index": "99", "z-index": "1"});
+
+                // 初始化圆圈位置
+                $(this).find(".showInfo").css({"left": "12px", "opacity": "0"});
+                $(this).find(".setRepair").css({"left": "12px", "opacity": "0"});
+                //默认隐藏
+                $(".tools").css("display", "none");
+                //显示出来 及动画
+                $(this).children(".tools").css("display", "block");
+                $(this).find(".setRepair").animate({"left": "43px", "opacity": "1"});
+                $(this).find(".showInfo").animate({"left": "-25px", "opacity": "1"});
+                e.stopPropagation();
+            });
+
+            //显示房间信息事件
+            $(".showInfo").click(function () {
+                var roomNum = $(this).parents("li").attr("id");
+                $.get("/getPrice", {"roomNum": roomNum}, function (res) {
+                    $scope.chuangWei = res[0].chuangWei;
+                    $scope.chuangXin = res[0].chuangXin;
+                    $scope.louCen = res[0].louCen;
+                    $scope.mianJi = res[0].mianJi;
+                    $scope._price = res[0].price;
+                    $scope._roomNum = res[0].roomNum;
+                    $scope._roomType = res[0].roomType;
+                    $scope.zaoCan = res[0].zaoCan;
+
+                });
+                $(".mask3").css("display", "block");
+                $("#showInfo").css("display", "block");
+            });
+            $("#cancel").click(function () {
+                $("#showInfo").css("display", "none");
+                $(".mask3").css("display", "none");
+            })
+            $("#xiugai").click(function () {
+                console.log($("#zaoCan").val());
+                $.get("/updateRoom", {
+                    "roomNum": $("#_roomNum").val(),
+                    "roomType": $("#roomType").val(),
+                    "price": $("#_price").val(),
+                    "mianJi": parseInt($("#mianJi").val()),
+                    "zaoCan": parseInt($("#zaoCan").val()),
+                    "chuangWei": parseInt($("#chuangWei").val()),
+                    "chuangXin": $("#chuangXin").val(),
+                    "louCen": $("#louCen").val()
+                }, function (res) {
+                    if (res == true) {
+                        $rootScope.showMes("修改成功！");
+                    } else {
+                        $rootScope.showMes("修改失败！");
+
+                    }
+                });
+                $("#showInfo").css("display", "none");
+                $(".mask3").css("display", "none");
+
+            })
+
+
+            //报修房间事件
+            $(".setRepair").click(function () {
+                var roomNum = $(this).parents("li").attr("id");
+                $.get("/getRepair", {"roomNum": roomNum}, function (res) {
+                    if (res.length == 0) {
+                        $("#xiugai3").css("display", "none");
+                        $("#xiugai2").css("display", "block");
+                        var today = new Date();
+                        today = $filter('date')(today, 'yyyy-MM-dd');
+                        $scope.roomNum2 = roomNum;
+                        $scope.startTime = today;
+                        $scope.principal2 = "";
+                        $scope.thing = "";
+                        $scope.reason = "";
+
+                    } else {
+                        $("#xiugai2").css("display", "none");
+                        $("#xiugai3").css("display", "block");
+                        $scope.roomNum2 = res[0].roomNum;
+                        $scope.startTime = $filter('date')(res[0].startTime, 'yyyy-MM-dd');
+                        $scope.principal2 = res[0].principal;
+                        $scope.thing = res[0].thing;
+                        $scope.reason = res[0].reason;
+                    }
+
+                });
+                $(".mask3").css("display", "block");
+                $("#setRepair").css("display", "block");
+            });
+            $("#cancel2").click(function () {
+                $("#setRepair").css("display", "none");
+                $(".mask3").css("display", "none");
+            })
+            $("#xiugai2").click(function () {
+                $.get("/addRepair", {
+                    "roomNum": $("#roomNum2").val(),
+                    "startTime": $("#startTime").val(),
+                    "principal": $("#principal2").val(),
+                    "thing": $("#thing").val(),
+                    "reason": $("#reason").val()
+                }, function (res) {
+                    if (res == true) {
+                        $rootScope.showMes("提交成功！");
+                    } else {
+                        $rootScope.showMes("提交失败！");
+
+                    }
+                });
+                $("#setRepair").css("display", "none");
+                $(".mask3").css("display", "none");
+
+            })
+            $("#xiugai3").click(function () {
+                $.get("/deleteRepair", {
+                    "roomNum": $("#roomNum2").val()
+                }, function (res) {
+                    if (res == true) {
+                        $rootScope.showMes("修改成功！");
+                    } else {
+                        $rootScope.showMes("修改失败！");
+
+                    }
+                });
+                $("#setRepair").css("display", "none");
+                $(".mask3").css("display", "none");
+
+            })
+
+            //去掉背景
+            $(".allroom").css("background", "url('')");
+            // 显示颜色
             for (var i = 0, len = result.orderedRoom.length; i < len; i++) {
                 $("#" + result.orderedRoom[i].roomNum).addClass("ordered");
             }
@@ -989,132 +1196,3 @@ myApp.controller("gzjs", ["$scope", function ($scope) {
 }])
 
 
-/*
-图表绘制
-*/
-
-/*
-
-myApp.controller("today", ["$scope", function ($scope) {
-    var myChart = echarts.init(document.getElementById('main'));
-    // 指定图表的配置项和数据
-    var option = {
-        title: {
-            text: '今日收入情况',
-        },
-        tooltip: {
-            trigger: 'axis'
-        },
-        legend: {
-            data: ['收入']
-        },
-        xAxis: {
-            type: 'category',
-            data: ['09:00', '09:30', '11:30', '12:00', '14:00', '17:00', '18:00']
-        },
-        yAxis: {
-            type: 'value',
-            axisLabel: {
-                formatter: '{value}元'
-            }
-        },
-        series: [{
-            name: "收入",
-            data: [100, 200, 400, 800, 200, 300, 100],
-            type: 'line',
-
-
-        }]
-    };
-
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
-    myChart.on("mouseover", function () {
-        /!* myChart.setOption({
-             series: [{
-             itemStyle : { normal: {label : {show: true}}}
-         }]}
-         );*!/
-    });
-    myChart.on("mouseout", function () {
-        /!*this.setOption({
-            series: [{
-            itemStyle : { normal: {label : {show: false}}}
-        }]}
-        );*!/
-    });
-
-
-// 今日收入
-// 本月收入
-// 今年收入
-
-}]);
-myApp.controller("month", ["$scope", function ($scope) {
-    var myChart = echarts.init(document.getElementById('main'));
-    // 指定图表的配置项和数据
-    var option = {
-
-        tooltip: {
-            trigger: 'axis'
-        },
-        xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
-        },
-        yAxis: {
-            type: 'value',
-            axisLabel: {
-                formatter: '{value} 元'
-            }
-        },
-        series: [
-            {
-                name: '收入',
-                type: 'line',
-                data: [1000, 2000, 3000, 1200, 1300, 1400, 1500, 1800, 4000, 2000, 1150, 1000, 300, 800, 1000, 1000, 1000, 8000, 1000, 7000, 5000, 3000, 1000, 4000, 1000, 2000, 1500, 2000, 9000, 1000]
-            }
-
-        ]
-    };
-
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
-
-}]);
-myApp.controller("year", ["$scope", function ($scope) {
-    var myChart = echarts.init(document.getElementById('main'));
-
-    var option = {
-
-        tooltip: {
-            trigger: 'axis'
-        },
-        xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-        },
-        yAxis: {
-            type: 'value',
-            axisLabel: {
-                formatter: '{value} 元'
-            }
-        },
-        series: [
-            {
-                name: '收入',
-                type: 'line',
-                data: [100000, 200000, 300000, 120000, 130000, 100400, 150000, 180000, 400000, 200000, 115000, 100000]
-            }
-
-        ]
-    };
-
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
-
-}]);
-
-*/

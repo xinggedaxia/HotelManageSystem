@@ -31,16 +31,17 @@
                 <option value="总统套房">总统套房</option>
 
             </select></td>
-            <td height="40" align="left" class="attrName">房间价格:</td>
+            <td height="40" align="left" class="attrName">新房间号:</td>
             <td height="40" align="left">
-                <input type="text" disabled value="{{priceString}}">
+                <select name="roomNum" id="roomNum" ng-model="ddfds"  ng-change="getPrice2()">
+                    <option ng-repeat="x in enableRoomNum" value="{{x}}" >{{x}}</option>
+
+                </select>
+
 
             </td>
-            <td height="40" colspan="2" align="left" class="attrName" >新房间号:</td>
-            <td height="40" colspan="2" align="left"><select name="roomNum" id="roomNum" >
-                <option ng-repeat="x in enableRoomNum" value="{{x}}" >{{x}}</option>
-
-            </select></td>
+            <td height="40" colspan="2" align="left" class="attrName" >房间价格:</td>
+            <td height="40" colspan="2" align="left"> <input type="text" disabled value="{{priceString}}"></td>
         </tr>
         <tr>
             <td height="40" align="left" class="attrName">入住日期:</td>
@@ -52,9 +53,9 @@
         </tr>
         <tr>
             <td height="40" align="left" class="attrName">价格合计:</td>
-            <td height="40" colspan="2" align="left"><input type="text" name="totalMonney" value="{{money}}"  disabled></td>
+            <td height="40" colspan="2" align="left"><input type="text" name="totalMonney" value="{{money}}"  disabled style="color:red"></td>
             <td height="40" align="left" class="attrName">押金退补:</td>
-            <td height="40" colspan="2" align="left"><input type="text" name="yajing" value="{{requireM}}" disabled></td>
+            <td height="40" colspan="2" align="left"><input type="text" name="yajing" value="{{requireM}}" disabled style="color:red"></td>
             <td height="40" colspan="2" align="left" class="attrName">填表人：</td>
             <td height="40" colspan="2" align="left"><input type="text" value="黄吉奥" disabled></td>
         </tr>

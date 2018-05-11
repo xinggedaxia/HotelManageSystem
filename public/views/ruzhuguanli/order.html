@@ -5,22 +5,26 @@
             <td height="40" colspan="10" align="center" class="h2" id="type">房间预定</td>
         </tr>
         <tr align="left">
-            <td width="150" height="40" align="left" class="attrName"> <label for="sfz">身份证号:</label></td>
-            <td height="40" colspan="2" align="left"><input type="text" name="number" placeholder="请刷卡或输入" id="sfz" value="{{currentUser.number}}"></td>
+            <td width="150" height="40" align="left" class="attrName"><label for="sfz">身份证号:</label></td>
+            <td height="40" colspan="2" align="left"><input type="text" name="number" placeholder="请刷卡或输入" id="sfz"
+                                                            value="{{currentUser.number}}"></td>
             <td width="150" height="40" align="left" class="attrName"><label for="name">姓名：</label></td>
             <td width="150" height="40" align="left"><input type="text" id="name" value="{{currentUser.name}}"></td>
             <td width="150" height="40" align="left" class="attrName">性别：</td>
             <td width="80" height="40" align="left"><label for="man">男</label></td>
-            <td width="80" height="40" align="left"><input type="radio" value="man" name="sex" id="man" checked ng-checked="currentUser.sex == '男'"></td>
-            <td width="80" height="40" align="left"><label for="woman" >女</label></td>
-            <td width="80" height="40" align="left"><input type="radio" value="woman" id="woman" name="sex" ng-checked="currentUser.sex == '女'"></td>
+            <td width="80" height="40" align="left"><input type="radio" value="man" name="sex" id="man" checked
+                                                           ng-checked="currentUser.sex == '男'"></td>
+            <td width="80" height="40" align="left"><label for="woman">女</label></td>
+            <td width="80" height="40" align="left"><input type="radio" value="woman" id="woman" name="sex"
+                                                           ng-checked="currentUser.sex == '女'"></td>
         </tr>
 
         <tr>
             <td height="40" align="left" class="attrName">入住日期:</td>
             <td height="40" colspan="2" align="left"><input type="date" name="inTime" id="intime"></td>
-            <td height="40" align="left" class="attrName" >退房日期:</td>
-            <td height="40" colspan="2" align="left" ><input type="date" name="outTime" id="outtime" ng-blur="getDays()"></td>
+            <td height="40" align="left" class="attrName">退房日期:</td>
+            <td height="40" colspan="2" align="left"><input type="date" name="outTime" id="outtime" ng-blur="getDays()">
+            </td>
             <td height="40" colspan="2" align="left" class="attrName">入住天数:</td>
             <td height="40" colspan="2" align="left"><input type="text" value="{{days}}" disabled></td>
         </tr>
@@ -30,7 +34,7 @@
                 <input type="number" value="1" id="population">
             </td>
             <td width="150" height="40" align="left" class="attrName">房间类型:</td>
-            <td height="40" align="left"> <select name="roomType" id="roomType" ng-model="value" ng-change="getRoom()">
+            <td height="40" align="left"><select name="roomType" id="roomType" ng-model="value" ng-change="getRoom()">
                 <option value="普通单间">普通单间</option>
                 <option value="普通双间">普通双间</option>
                 <option value="豪华单间">豪华单间</option>
@@ -39,24 +43,104 @@
                 <option value="总统套房">总统套房</option>
 
             </select></td>
-            <td height="40" align="left" class="attrName">房间价格:</td>
+            <td height="40" align="left" class="attrName">房间号:<span class="sel" ng-click="show_search()">筛选</span></td>
             <td height="40" align="left">
-                <input type="text" disabled value="{{priceString}}">
+                <select name="roomNum" id="roomNum" ng-model="myvalue" ng-change="getPrice2()">
+                    <option ng-repeat="x in enableRoomNum" value="{{x}}">{{x}}</option>
+                </select>
             </td>
-            <td height="40" colspan="2" align="left" class="attrName">房间号:</td>
-            <td height="40" colspan="2" align="left"><select name="roomNum" id="roomNum" >
-                <option ng-repeat="x in enableRoomNum" value="{{x}}" >{{x}}</option>
-
-            </select></td>
+            <td height="40" colspan="2" align="left" class="attrName">房间价格:</td>
+            <td height="40" colspan="2" align="left">
+                <input type="text" disabled value="{{priceString}}"></td>
         </tr>
         <tr>
             <td height="40" align="left" class="attrName">价格合计:</td>
-            <td height="40" colspan="2" align="left"><input type="text" name="totalMonney" value="{{money}}"  disabled></td>
+            <td height="40" colspan="2" align="left"><input type="text" name="totalMonney" value="{{money}}" disabled
+                                                            style="color:red"></td>
             <td height="40" align="left" class="attrName">需缴押金:</td>
-            <td height="40" colspan="2" align="left"><input type="text" name="yajing" value="{{deposit}}" disabled></td>
+            <td height="40" colspan="2" align="left"><input type="text" name="yajing" value="{{deposit}}" disabled
+                                                            style="color:red"></td>
             <td height="40" colspan="2" align="left" class="attrName">填表人：</td>
             <td height="40" colspan="2" align="left"><input type="text" value="黄吉奥" disabled></td>
         </tr>
     </table>
     <input type="submit" value="预定" id="submit" class="btn btn-success" ng-click="commit()">
+
+
+    <div class="searchRoom">
+        <h2>高级筛选</h2>
+        <div>
+
+            <span class="item_l">
+           <span class="attrName"> 类型：</span>
+        <select id="s_roomType" class="spe">
+        <option value="不限">不限</option>
+        <option value="普通单间">普通单间</option>
+        <option value="普通双间">普通双间</option>
+        <option value="豪华单间">豪华单间</option>
+        <option value="豪华双间">豪华双间</option>
+        <option value="贵宾套房">贵宾套房</option>
+        <option value="总统套房">总统套房</option>
+    </select>
+        </span>
+            <span class="item_r">
+           <span class="attrName"> 价格：</span>
+        <select id="s_price" class="spe">
+        <option value="不限">不限</option>
+        <option value="1">100-200</option>
+        <option value="2">200-300</option>
+        <option value="3">300-400</option>
+        <option value="4">400-800</option>
+        <option value="5">800以上</option>
+        </select>
+        </span>
+        </div>
+
+
+        <div>
+       <span class="item_l">
+           <span class="attrName">早餐：</span>
+           <select class="spe"  id="zaoCan">
+        <option value="2">不限</option>
+        <option value="0">不提供</option>
+        <option value="1">提供</option>
+
+        </select>
+       </span>
+            <span class="item_r">
+            <span class="attrName">床型：</span><select id="chuangXin">
+        <option value="不限">不限</option>
+        <option value="中床">中床</option>
+        <option value="大床">大床</option>
+
+    </select>
+        </span>
+        </div>
+        <div>
+            <span class="item_l"><span class="attrName"> 床位：</span><select id="chuangWei">
+        <option value="-1">不限</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+
+    </select>
+            </span>
+            <span class="item_r"><span class="attrName">楼层：</span><select id="louCen">
+        <option value="-1">不限</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+
+    </select></span>
+        </div>
+        <div>
+            <span class="cancel" id="cancle" ng-click="close_s()">取消</span>
+            <span class="xiugai" id="searchR" ng-click="searchR()">筛选</span>
+        </div>
+    </div>
 </div>
