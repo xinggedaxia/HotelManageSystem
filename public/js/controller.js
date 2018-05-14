@@ -183,23 +183,115 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
 
     // 房间高级筛选
     $scope.show_search = function () {
-        $(".searchRoom").css("display","block");
-        $(".mask").css("display","block");
+        $(".searchRoom").css("display", "block");
+        $(".mask").css("display", "block");
     }
     $scope.close_s = function () {
-        $(".searchRoom").css("display","none");
-        $(".mask").css("display","none");
+        $(".searchRoom").css("display", "none");
+        $(".mask").css("display", "none");
     }
     $scope.searchR = function () {
-        $.get("/searchRoom",
-            {"intime": $scope.intime, "outtime": $scope.outtime},
-            function (result) {
-                
-            });
+       $.get("/allRoom",function (res) {
+           var allRoom = res;
+           $.get("/searchRoom",
+               {"intime": $scope.intime, "outtime": $scope.outtime},
+               function (result) {
+                   var uRoom = result;
+                   var str = "";
+                   var type = $("#s_roomType").val();
+                   var price = $("#s_price").val();
+                   var zaoCan = $("#zaoCan").val();
+                   var chuangXin = $("#chuangXin").val();
+                   var chuangWei = $("#chuangWei").val();
+                   var louCen = $("#louCen").val();
+
+                   // 房间类型判断
+                   if (type == "不限") {
+                       str += true;
+                   } else {
+                       str += "room.roomType=='"+type+"'";
+                   }
+
+                   // 房间价格判断
+                   if (price == "不限") {
+                       str += "&&true"
+                   } else {
+                       if (price == "1") {
+                           str += "&&room.price>=100&&room.price<200";
+                       } else if (price == "2") {
+                           str += "&&room.price>=200&&room.price<300";
+                       } else if (price == "3") {
+                           str += "&&room.price>=300&&room.price<400";
+                       } else if (price == "4") {
+                           str += "&&room.price>=400&&room.price<800";
+                       } else {
+                           str += "&&room.price>=800";
+                       }
+                   }
+
+                   // 早餐判断
+                   if (zaoCan == "-1") {
+                       str += "&&true";
+                   } else {
+                       if (zaoCan == "0") {
+                           str += "&&room.zaoCan==0";
+                       } else {
+                           str += "&&room.zaoCan==1";
+                       }
+                   }
+
+                   //床型判断
+                   if (chuangXin == "-1") {
+                       str += "&&true";
+                   } else if (chuangXin == "1") {
+                       str += "&&room.chuangXin=='中床'";
+                   } else {
+                       str += "&&room.chuangXin=='大床'";
+                   }
+
+                   // 床位判断
+                   if(chuangWei == "-1"){
+                       str += "&&true";
+                   }else{
+                       str += "&&room.chuangWei=="+parseInt(chuangWei);
+                   }
+
+                   // 楼层判断
+                   if(louCen == "-1"){
+                       str += "&&true";
+                   }else{
+                       str += "&&room.louCen=="+parseInt(louCen);
+                   }
+                   console.log(str);
+                   $scope.enableRoomNum = [];
+                   for(var i = 0,len = allRoom.length; i < len ; i++ ){
+                       var room = allRoom[i];
+                       var flag = true;
+                        for(var j = 0,len2 = uRoom.length; j < len2 ; j++ ){
+                            var room2 = uRoom[j];
+                            if(room.roomNum == room2.roomNum){
+                               flag = false;
+                            }
+                        }
+
+                        if(flag){
+                            if(eval(str)){
+                                $scope.enableRoomNum.push(room.roomNum);
+                            }
+                        }
+                   }
+                   if($scope.enableRoomNum.length == 0){
+                       $rootScope.showMes2("抱歉，没找到符合的房间！")
+                   }else{
+                       $rootScope.showMes("筛选成功！")
+                   }
+
+               });
+       })
 
 
-        $(".searchRoom").css("display","none");
-        $(".mask").css("display","none");
+        $(".searchRoom").css("display", "none");
+        $(".mask").css("display", "none");
     }
 
 
@@ -207,11 +299,12 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
     $scope.readCard = function () {
 
 
-        $scope.user = 0;
-        $scope.other = [];
+
         var population = parseInt($("#population").val());
         if (population > 1) {
-            $(".mask5").css("display","block");
+            $scope.user = 0;
+            $scope.other = [];
+            $(".mask5").css("display", "block");
             var str = "请再刷" + (population - 1) + "人的身份证！";
             $rootScope.showMes2(str)
             $("#readOther").css("display", "block");
@@ -219,7 +312,8 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
     }
     $scope.closeV = function () {
         $("#readOther").css("display", "none");
-        $(".mask5").css("display","none");
+        $(".mask5").css("display", "none");
+        $rootScope.showMes("读取成功！");
         $scope.user = 1;
     }
 
@@ -256,9 +350,13 @@ myApp.controller("main", ["$scope", "$filter", "$interval", "$rootScope", functi
             $scope.money = $scope.price * $scope.days + "元";
             $scope.deposit = $scope.price * $scope.days * 1.5 + "元";
 
-            //计算退补押金金额
-            var num = $scope.price * $scope.days * 1.5 - $scope.oldDeposit;
-            $scope.requireM = (num) >= 0 ? "补交押金" + num + "元" : "退还押金" + (-num) + "元";
+
+            if(window.location.href.slice(23) == "huanfang"){
+                //计算退补押金金额
+                var num = $scope.price * $scope.days * 1.5 - $scope.oldDeposit;
+                $scope.requireM = (num) >= 0 ? "补交押金" + num + "元" : "退还押金" + (-num) + "元";
+
+            }
         });
     }
     //根据条件显示空房和价格
@@ -1086,6 +1184,8 @@ myApp.controller("ygkq", ["$scope", "$filter", function ($scope, $filter) {
     }
 }]);
 
+
+// 工资结算
 myApp.controller("gzjs", ["$scope", function ($scope) {
     /* $.get("/employeeInfo", function (res) {
          $scope.employeeInfo3 = res;

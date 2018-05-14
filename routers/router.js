@@ -202,7 +202,7 @@ module.exports.findOneRoom = function (req, res) {
 
 // 更新房价
 module.exports.updatePrice = function (req, res) {
-    console.log(req.query.price1);
+    // console.log(req.query.price1);
     db.update("update roominfo set price = '" + req.query.price1 + "' where roomtype = '普通单间'", function (result) {
         db.update("update roominfo set price = '" + req.query.price2 + "' where roomtype = '普通双间'", function (result) {
             db.update("update roominfo set price = '" + req.query.price3 + "' where roomtype = '豪华单间'", function (result) {
@@ -456,7 +456,7 @@ module.exports.kaoqing = function (req, res) {
 
 }
 module.exports.employeeKaoQing = function (req,res) {
-    db.find("SELECT a.number,a.name,a.job,a.wage,b.chidao,b.weidao,b.zaotui,b.jiaban FROM employees  a,Timesheets_18_5  b WHERE a.number=b.number",function (result) {
+    db.find("SELECT a.number,a.name,a.job,a.wage,b.chidao,b.weidao,b.zaotui,b.jiaban FROM employees  as a, timesheets_18_5  as b WHERE a.number=b.number",function (result) {
         res.send(result);
     });
 }
@@ -516,6 +516,12 @@ module.exports.addRepair = function (req,res) {
 module.exports.deleteRepair = function (req,res) {
     var roomNum = req.query.roomNum;
     db.remove("delete from repair where roomNum = '"+ roomNum+"'",function (result) {
+        res.send(result);
+    });
+}
+
+module.exports.allRoom = function (req,res) {
+    db.find("select * from roominfo", function (result) {
         res.send(result);
     });
 }

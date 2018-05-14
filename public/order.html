@@ -5,6 +5,8 @@
     <title>世纪酒店</title>
     <link rel="stylesheet/less" type="text/css" href="/css/order.less" />
     <script src="/libs/less/less.js" ></script>
+    <script src="/libs/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/js/order.js"></script>
 </head>
 <body>
 <div class="header">
@@ -26,23 +28,25 @@
      </div>
      <div class="right">
          <h2>普通单间</h2>
-         <p class="price">价格：￥<span>100</span></p>
+         <p class="price">价格：￥<span>100-170</span></p>
          <h3>配置信息</h3>
          <p class="roomInfo">
 
-             <span>房间10-15㎡</span>
+             <span>房间20㎡</span>
              <span>|</span>
-             <span>中床1.3米</span>
+             <span>中床1.5米</span>
              <span>|</span>
-             <span>可住：1人
+             <span>可住：2人
 </span>
              <span>|</span>
-             <span title="楼层：1层">楼层：1层</span>
+             <span title="楼层：1层">楼层：1-2层</span>
              <span>|</span>
              <span >包含卫生间</span>
+             <span>|</span>
+             <span >免费宽带</span>
 
          </p>
-         <button class="yuDing">预定</button>
+         <button class="yuDing" data_type="普通单间">预定</button>
      </div>
  </div>
 </div><div class="roomList">
@@ -52,23 +56,25 @@
      </div>
      <div class="right">
          <h2>普通双间</h2>
-         <p class="price">价格：￥<span>200</span></p>
+         <p class="price">价格：￥<span>200-300</span></p>
          <h3>配置信息</h3>
          <p class="roomInfo">
 
-             <span>房间15-25㎡</span>
+             <span>房间25㎡</span>
              <span>|</span>
-             <span>中床1.3米</span>
+             <span>中床1.5米</span>
              <span>|</span>
-             <span>可住：2人
+             <span>可住：4人
 </span>
              <span>|</span>
-             <span title="楼层：2层">楼层：2层</span>
+             <span title="楼层：2层">楼层：3-4层</span>
              <span>|</span>
              <span >包含卫生间</span>
+             <span>|</span>
+             <span >免费宽带</span>
 
          </p>
-         <button class="yuDing">预定</button>
+         <button class="yuDing" data_type="普通双间">预定</button>
      </div>
  </div>
 </div><div class="roomList">
@@ -78,23 +84,23 @@
      </div>
      <div class="right">
          <h2>豪华单间</h2>
-         <p class="price">价格：￥<span>200</span></p>
+         <p class="price">价格：￥<span>200-340</span></p>
          <h3>配置信息</h3>
          <p class="roomInfo">
 
-             <span>房间15-20㎡</span>
+             <span>房间23㎡</span>
              <span>|</span>
-             <span>大床1.5米</span>
+             <span>大床1.8米</span>
              <span>|</span>
              <span>可住：2人
 </span>
              <span>|</span>
-             <span title="楼层：3层">楼层：3层</span>
+             <span title="楼层：3层">楼层：5层</span>
              <span>|</span>
              <span >包含卫生间、无线、宽带</span>
 
          </p>
-         <button class="yuDing">预定</button>
+         <button class="yuDing" data_type="豪华单间">预定</button>
      </div>
  </div>
 </div><div class="roomList">
@@ -104,23 +110,23 @@
      </div>
      <div class="right">
          <h2>豪华双间</h2>
-         <p class="price">价格：￥<span>400</span></p>
+         <p class="price">价格：￥<span>400-580</span></p>
          <h3>配置信息</h3>
          <p class="roomInfo">
 
-             <span>房间30-35㎡</span>
+             <span>房间35㎡</span>
              <span>|</span>
-             <span>大床1.5米</span>
+             <span>大床1.8米</span>
              <span>|</span>
              <span>可住：4人
 </span>
              <span>|</span>
-             <span title="楼层：4层">楼层：4层</span>
+             <span title="楼层：4层">楼层：6层</span>
              <span>|</span>
              <span>包含卫生间、无线、宽带</span>
 
          </p>
-         <button class="yuDing">预定</button>
+         <button class="yuDing" data_type="豪华双间">预定</button>
      </div>
  </div>
 </div><div class="roomList">
@@ -134,19 +140,19 @@
          <h3>配置信息</h3>
          <p class="roomInfo">
 
-             <span>房间60-80㎡</span>
+             <span>房间50㎡</span>
              <span>|</span>
-             <span>大床1.9米</span>
+             <span>大床2米</span>
              <span>|</span>
              <span>可住：4人
 </span>
              <span>|</span>
-             <span title="楼层：5层">楼层：5层</span>
+             <span title="楼层：5层">楼层：7层</span>
              <span>|</span>
-             <span>包含卫生间、无线、宽带、40寸液晶电视、中央空调</span>
+             <span>包含卫生间、无线、宽带、40寸液晶电视、中央空调、豪华早餐</span>
 
          </p>
-         <button class="yuDing">预定</button>
+         <button class="yuDing" data_type="贵宾套房">预定</button>
      </div>
  </div>
 </div><div class="roomList">
@@ -156,25 +162,105 @@
      </div>
      <div class="right">
          <h2>总统套房</h2>
-         <p class="price">价格：￥<span>1500</span></p>
+         <p class="price">价格：￥<span>1600</span></p>
          <h3>配置信息</h3>
          <p class="roomInfo">
 
-             <span>房间100-120㎡</span>
+             <span>房间80㎡</span>
              <span>|</span>
              <span>大床2米</span>
              <span>|</span>
              <span>可住：4人
 </span>
              <span>|</span>
-             <span title="楼层：6层">楼层：6层</span>
+             <span title="楼层：6层">楼层：8层</span>
              <span>|</span>
-             <span >包含卫生间、无线、宽带、40寸液晶电视、中央空调</span>
+             <span >包含卫生间、无线、宽带、40寸液晶电视、中央空调、豪华早餐</span>
 
          </p>
-         <button class="yuDing">预定</button>
+         <button class="yuDing" data_type="总统套房">预定</button>
      </div>
  </div>
+</div>
+<div class="mask"></div>
+<div class="orderView">
+<h3 class="order_title">预定信息</h3>
+    <div class="part">
+        <div class="left">
+            <span class="title1">房间类型：</span>
+            <span class="content" id="roomType">普通单间</span>
+        </div>
+        <!--<div class="right">
+            <span class="title1">入住人数：</span>
+            <input type="text" value="2">
+        </div>-->
+    </div>
+    <div class="part">
+        <div class="left">
+            <span class="title1">入住时间：</span>
+            <input type="date" id="intime">
+        </div>
+        <div class="right">
+            <span class="title1">退房时间：</span>
+            <input type="date" id="outtime">
+        </div>
+    </div>
+    <div class="part">
+        <div class="left">
+            <span class="title1">入住天数：</span>
+            <input type="text" disabled id="days">
+        </div>
+        <div class="right">
+            <span class="title1">入住人数：</span>
+            <input type="text" id="population">
+        </div>
+    </div>
+    <div class="part">
+        <div class="left">
+            <span class="title1">身份证号：</span>
+            <input type="text" id="number">
+        </div>
+       <!-- <div class="right">
+            <span class="title1"></span>
+            <input type="text">
+        </div>-->
+    </div>
+    <div class="part">
+        <div class="left">
+            <span class="title1 ">手机号：</span>
+            <input type="text" class="phone">
+            <button id="getY" type="button">获取验证码</button>
+        </div>
+        <div class="right">
+            <span class="title1 ">验证码：</span>
+            <input type="text" class="yzm" value="">
+            <button id="check">验证</button>
+
+        </div>
+    </div>
+    <div class="choose">
+        <span>房间选择：</span>
+        早餐：不提供<input type="radio" name="zaoCan" value="1" class="none" checked="checked">提供<input type="radio" name="zaoCan" value="0" id="zaocan">
+        床型：中床<input type="radio" name="chuangXin" value="0" checked="checked" id="medium">大床<input type="radio" name="chuangXin" value="1">
+        <button class="search">筛选</button>
+        <div class="roomNum">
+            <span class="title1">房间号：</span><span id="roomNum" style="color:red">---</span>
+            <span class="title1">房间价格：</span><span id="price" style="color:red"> ---</span>元/天
+        </div>
+    </div>
+    <span id="confirm" class="disabled">确认</span>
+    <span id="cancel" >取消</span>
+</div>
+<div class="payView">
+<h3 class="order_title">在线支付</h3>
+    <p class="info">
+        <span>请扫码支付，应付金额:</span><span id="money">---</span><span>元</span>
+
+    </p>
+    <img src="./images/erweima.jpg" alt="" class="erWeiMa">
+    <p class="su_info">支付成功！<span class="time2">5</span>秒后自动关闭</p>
+    <span class="close">×</span>
+
 </div>
 </body>
 </html>

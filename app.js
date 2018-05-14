@@ -57,6 +57,7 @@ app.get("/getPrice",router.getPrice);
 app.get("/getRepair",router.getRepair);
 app.get("/addRepair",router.addRepair);
 app.get("/deleteRepair",router.deleteRepair);
+app.get("/allRoom",router.allRoom);
 
 
 
